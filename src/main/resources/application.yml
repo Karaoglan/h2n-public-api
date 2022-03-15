@@ -1,2 +1,11 @@
+spring:
+  datasource:
+    hikari:
+      auto-commit: true
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: default
+
 server:
   port: ${PORT:5000}
