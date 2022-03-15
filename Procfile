@@ -1,1 +1,1 @@
-web: java -Dspring.profiles.active=local -jar target/publicapi-0.0.1-SNAPSHOT.jar
+web: java -Dspring.profiles.active=prod -jar target/publicapi-0.0.1-SNAPSHOT.jar
