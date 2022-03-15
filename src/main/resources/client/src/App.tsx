@@ -23,6 +23,9 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo"/>
+        <h1 className="text-3xl font-bold underline">
+          Hello world!
+        </h1>
         {posts.map((post, idx) => (
           <div>
             <span key={idx}>
