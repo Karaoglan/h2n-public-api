@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dspring.profiles.active=prod -jar target/publicapi-0.0.1-SNAPSHOT.jar -Dserver.port=$PORT $JAR_OPTS
+web: java -Dserver.port=$PORT -Dspring.profiles.active=prod $JAVA_OPTS -jar target/publicapi-0.0.1-SNAPSHOT.jar
