@@ -16,6 +16,7 @@ function App() {
   }, []);
 
   const fetch = async () => {
+    console.warn(new Date().toISOString());
     const response = await axios.get('/posts');
     setPosts(response.data);
   };
