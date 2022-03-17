@@ -17,7 +17,6 @@ spring:
         format_sql: true
     show-sql: true
 
-
 logging.level.org.hibernate.SQL: DEBUG
 logging.level.org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 logging.level.org.springframework.jdbc.core.JdbcTemplate: DEBUG
