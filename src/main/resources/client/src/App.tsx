@@ -16,7 +16,7 @@ function App() {
   }, []);
 
   const fetch = async () => {
-    const response = await axios.get('http://localhost:8080/posts');
+    const response = await axios.get('/posts');
     setPosts(response.data);
   };
   return (
