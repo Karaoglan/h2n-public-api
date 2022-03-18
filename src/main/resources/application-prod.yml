@@ -3,6 +3,8 @@ spring:
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+    hikari:
+      auto-commit: off
   jpa:
     properties:
       hibernate:
