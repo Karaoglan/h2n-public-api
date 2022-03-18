@@ -83,12 +83,12 @@
                                 <resource>
                                     <directory>src/main/resources/client/build</directory>
                                 </resource>
-                                <resource>
+                                <!--resource>
                                     <directory>src/main/resources</directory>
                                     <includes>
                                         <include>*.yml</include>
                                     </includes>
-                                </resource>
+                                </resource>-->
                             </resources>
                         </configuration>
                     </execution>
@@ -143,6 +143,7 @@
                 <filtering>true</filtering>
                 <includes>
                     <include>**/*.yml</include>
+                    <include>**/*.sql</include>
                 </includes>
             </resource>
         </resources>

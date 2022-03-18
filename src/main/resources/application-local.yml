@@ -8,6 +8,12 @@ spring:
     username: sa
     password:
     driverClassName: org.h2.Driver
+    hikari:
+      auto-commit: true
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: default
   jpa:
     database: h2
     database-platform: org.hibernate.dialect.H2Dialect
