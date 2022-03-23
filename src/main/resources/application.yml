@@ -1,13 +1,6 @@
 spring:
-  datasource:
-    hikari:
-      auto-commit: true
   profiles:
     active: '@activatedProperties@'
-  data:
-    jpa:
-      repositories:
-        bootstrap-mode: default
 
 server:
   port: ${PORT:8080}

@@ -2,13 +2,14 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import axios from 'axios';
 import {Card} from "./components/Card";
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import {Link, Route, Routes, useNavigate} from "react-router-dom";
 
 import {PostDetail} from "./components/PostDetail";
 
 export type H2NPost = {
-  id: number;
+  id: string;
   summarizeText: string;
+  postText: string;
   clickHandler?: React.MouseEventHandler<HTMLDivElement>;
 }
 
@@ -16,7 +17,7 @@ function App() {
   const navigate = useNavigate();
 
   const [posts, setPosts] = useState<H2NPost[]>([]);
-  const [clickedPostId, setClickedPostId] = useState<number>();
+  const [clickedPostId, setClickedPostId] = useState<string>();
   useEffect(() => {
     fetch().then();
   }, []);
@@ -27,7 +28,7 @@ function App() {
     setPosts(response.data);
   };
 
-  const clicked = (postId: number) => {
+  const clicked = (postId: string) => {
     setClickedPostId(postId)
     console.log('clicked');
     navigate(`/posts/${clickedPostId}`)
@@ -37,30 +38,42 @@ function App() {
     return <div className="App">
       <header className="App-header">
         {posts.map((post, idx) => (
-          <Card clickHandler={() => clicked(post.id)} key={idx} id={post.id} summarizeText={post.summarizeText}/>
+          <Card clickHandler={() => clicked(post.id)} key={idx} id={post.id} postText={''} summarizeText={post.summarizeText}/>
         ))}
       </header>
     </div>
   }
 
+  const findPostText = (id: string): string => {
+    const post = posts.find(post => post.id === id);
+    return post ? post.postText : '';
+  }
+
+  const findSummarizeText = (id: string): string => {
+    const post = posts.find(post => post.id === id);
+    return post ? post.summarizeText : '';
+  }
+
   const postDetailElem = () => {
-    return clickedPostId ? <PostDetail postId={clickedPostId} /> : <></>
+    return clickedPostId ?
+      <PostDetail postId={clickedPostId} summarizeText={findSummarizeText(clickedPostId)}
+                  postText={findPostText(clickedPostId)}/> : <></>
   }
 
   return (
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-          </ul>
-        </nav>
-        <Routes>
-          <Route path="/posts/:id" element={postDetailElem()} />
-          <Route path="/" element={postsElem()} />
-        </Routes>
-      </div>);
+    <div>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+        </ul>
+      </nav>
+      <Routes>
+        <Route path="/posts/:id" element={postDetailElem()}/>
+        <Route path="/" element={postsElem()}/>
+      </Routes>
+    </div>);
 }
 
 export default App;

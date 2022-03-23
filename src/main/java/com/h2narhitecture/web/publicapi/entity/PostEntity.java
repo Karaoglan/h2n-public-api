@@ -1,23 +1,23 @@
 package com.h2narhitecture.web.publicapi.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity(name = "H2N_POST")
-@Data
+@Document("h2npost")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "SUMMARIZE_TEXT")
+@ToString
+public class PostEntity extends BaseModel {
+    @NotBlank
     private String summarizeText;
+
+    @NotBlank
+    private String postText;
 }

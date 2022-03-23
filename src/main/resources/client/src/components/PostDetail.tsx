@@ -1,33 +1,26 @@
-import {FunctionComponent, useEffect, useState} from "react";
+import {FunctionComponent, useState} from "react";
 import './Card.css';
-import axios from "axios";
 import {Card} from "./Card";
 
 export type H2NPostDetailRequest = {
-  postId: number;
+  postId: string;
+  postText: string;
+  summarizeText: string;
 }
 
 
 export type H2NPostDetailResponse = {
-  id: number,
+  id: string,
+  summarizeText: string,
   postText: string,
-  post: number;
 }
 
-export const PostDetail: FunctionComponent<H2NPostDetailRequest> = ({postId}) => {
-  const [postDetail, setPostDetail] = useState<H2NPostDetailResponse>();
-
-  useEffect(() => {
-    fetch().then();
-  }, []);
-
-  const fetch = async () => {
-    const response = await axios.get(`/posts/${postId}`);
-    setPostDetail(response.data);
-  };
+export const PostDetail: FunctionComponent<H2NPostDetailRequest> = ({postId, postText, summarizeText}) => {
+  const [postDetail, setPostDetail] = useState<H2NPostDetailResponse>({id: postId, summarizeText, postText});
 
   const getRenderData = () => {
-    return postDetail ? <Card id={postDetail.id} summarizeText={postDetail.postText}/> : <></>;
+    return postDetail ?
+      <Card id={postDetail.id} postText={postDetail.postText} summarizeText={postDetail.summarizeText}/> : <></>;
   }
 
   return (
