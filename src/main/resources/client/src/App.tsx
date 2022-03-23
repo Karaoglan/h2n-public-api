@@ -5,12 +5,21 @@ import {Card} from "./components/Card";
 import {Link, Route, Routes, useNavigate} from "react-router-dom";
 
 import {PostDetail} from "./components/PostDetail";
+import {NavBar} from "./components/NavBar";
 
 export type H2NPost = {
   id: string;
   summarizeText: string;
   postText: string;
   clickHandler?: React.MouseEventHandler<HTMLDivElement>;
+}
+
+type PostPageResponse = {
+  content: H2NPost[];
+  pageNumber: number;
+  pageSize: number;
+  totalElements: number;
+  totalPages: number;
 }
 
 function App() {
@@ -24,8 +33,9 @@ function App() {
 
   const fetch = async () => {
     console.warn('18.03 - 07:09');
-    const response = await axios.get('/posts');
-    setPosts(response.data);
+    const response = await axios.get<PostPageResponse>('/posts?pageNumber=0&pageSize=20');
+    setPosts(response.data.content);
+    // TODO pagination
   };
 
   const clicked = (postId: string) => {
@@ -62,13 +72,7 @@ function App() {
 
   return (
     <div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-        </ul>
-      </nav>
+      <NavBar />
       <Routes>
         <Route path="/posts/:id" element={postDetailElem()}/>
         <Route path="/" element={postsElem()}/>

@@ -30,6 +30,11 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.0.10.Final</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
@@ -150,7 +155,7 @@
             </properties>
             <dependencies>
                 <dependency>
-                    <groupId>de.flapdoodle.emdbed</groupId>
+                    <groupId>de.flapdoodle.embed</groupId>
                     <artifactId>de.flapdoodle.embed.mongo</artifactId>
                 </dependency>
             </dependencies>
