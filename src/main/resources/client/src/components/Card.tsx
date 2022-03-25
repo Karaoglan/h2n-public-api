@@ -3,9 +3,10 @@ import {H2NPost} from "../App";
 import './Card.css';
 
 export const Card: FunctionComponent<H2NPost> = ({id, summarizeText, postText, clickHandler}) => {
-
+//max-w-sm w-full lg:max-w-full lg:flex
   return (
-    <div onClick={clickHandler} className="max-w-sm w-full lg:max-w-full lg:flex">
+    <div onClick={clickHandler} className="">
+        CONTENT
       <div
         className="card-image h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
         title="Woman holding a mug">

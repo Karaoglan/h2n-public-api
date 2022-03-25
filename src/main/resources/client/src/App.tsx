@@ -71,12 +71,14 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="flex m-8">
       <NavBar />
-      <Routes>
-        <Route path="/posts/:id" element={postDetailElem()}/>
-        <Route path="/" element={postsElem()}/>
-      </Routes>
+      <aside className="ml-8">
+        <Routes>
+          <Route path="/posts/:id" element={postDetailElem()}/>
+          <Route path="/" element={postsElem()}/>
+        </Routes>
+      </aside>
     </div>);
 }
 

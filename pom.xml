@@ -15,8 +15,13 @@
     <description>h2n public api</description>
     <properties>
         <java.version>11</java.version>
+        <skipClient>false</skipClient>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
@@ -88,6 +93,7 @@
                                     </includes>
                                 </resource>-->
                             </resources>
+                            <skip>${skipClient}</skip>
                         </configuration>
                     </execution>
                 </executions>
@@ -99,6 +105,7 @@
                 <configuration>
                     <workingDirectory>src/main/resources/client</workingDirectory>
                     <installDirectory>target</installDirectory>
+                    <skip>${skipClient}</skip>
                 </configuration>
                 <executions>
                     <execution>
