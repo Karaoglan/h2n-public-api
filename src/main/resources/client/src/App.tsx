@@ -2,10 +2,11 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import axios from 'axios';
 import {Card} from "./components/Card";
-import {Link, Route, Routes, useNavigate} from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 
 import {PostDetail} from "./components/PostDetail";
 import {NavBar} from "./components/NavBar";
+import { CardPulseLoading } from "./components/CardPulseLoading";
 
 export type H2NPost = {
   id: string;
@@ -28,7 +29,9 @@ function App() {
   const [posts, setPosts] = useState<H2NPost[]>([]);
   const [clickedPostId, setClickedPostId] = useState<string>();
   useEffect(() => {
-    fetch().then();
+    setTimeout(() => {
+      fetch().then();
+    }, 2000);
   }, []);
 
   const fetch = async () => {
@@ -47,6 +50,7 @@ function App() {
   const postsElem = () => {
     return <div className="App">
       <header className="App-header">
+        {!posts.length ? <CardPulseLoading /> : <></>}
         {posts.map((post, idx) => (
           <Card clickHandler={() => clicked(post.id)} key={idx} id={post.id} postText={''} summarizeText={post.summarizeText}/>
         ))}
