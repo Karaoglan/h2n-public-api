@@ -1,5 +1,4 @@
 import {FunctionComponent, useState} from "react";
-import './Card.css';
 import {Card} from "./Card";
 
 export type H2NPostDetailRequest = {
@@ -16,14 +15,10 @@ export type H2NPostDetailResponse = {
 }
 
 export const PostDetail: FunctionComponent<H2NPostDetailRequest> = ({postId, postText, summarizeText}) => {
-  const [postDetail, setPostDetail] = useState<H2NPostDetailResponse>({id: postId, summarizeText, postText});
-
-  const getRenderData = () => {
-    return postDetail ?
-      <Card id={postDetail.id} postText={postDetail.postText} summarizeText={postDetail.summarizeText}/> : <></>;
-  }
+  const [postDetail] = useState<H2NPostDetailResponse>({id: postId, summarizeText, postText});
 
   return (
-    getRenderData()
+    postDetail ?
+      <Card id={postDetail.id} postText={postDetail.postText} summarizeText={postDetail.summarizeText}/> : <></>
   );
 }

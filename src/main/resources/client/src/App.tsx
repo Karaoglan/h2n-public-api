@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import './App.css';
 import axios from 'axios';
-import {Route, Routes, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 import {PostDetail} from "./components/PostDetail";
-import {NavBar} from "./components/NavBar";
 import {CardPulseLoading} from "./components/CardPulseLoading";
 import {Card} from "./components/Card";
+import {Route, Routes} from "react-router";
+import {NavBar} from "./components/NavBar";
+import {AboutUsPage} from "./pages/AboutUs";
+import {FooterPage} from "./pages/Footer";
+import i18n from "i18next";
+import {initReactI18next, useTranslation} from "react-i18next";
 
 export type H2NPost = {
   id: string;
@@ -23,9 +27,28 @@ type PostPageResponse = {
   totalPages: number;
 }
 
+const translationsTr = {welcome: 'Hoşgeldiniz'};
+const translationsEn = {welcome: 'Welcome'};
+const translationsDe = {welcome: 'Willkommen'};
+
+i18n
+  .use(initReactI18next)
+  .init({
+    resources: {
+      tr: {translation: translationsTr},
+      en: {translation: translationsEn},
+      de: {translation: translationsDe},
+    },
+    lng: "tr",
+    fallbackLng: "en",
+    interpolation: {escapeValue: false},
+  });
+
 function App() {
+  const {t} = useTranslation();
   const navigate = useNavigate();
 
+  const [lang, setLang] = useState("tr");
   const [posts, setPosts] = useState<H2NPost[]>([]);
   const [clickedPostId, setClickedPostId] = useState<string>();
   useEffect(() => {
@@ -33,6 +56,11 @@ function App() {
       fetch().then();
     }, 2000);
   }, []);
+
+  useEffect(() => {
+    console.log(lang);
+    i18n.changeLanguage(lang);
+  }, [lang]);
 
   const fetch = async () => {
     console.warn('18.03 - 07:09');
@@ -48,51 +76,16 @@ function App() {
   }
 
   const postsElem = () => {
-    return <div className="">
-      {!posts.length ? <CardPulseLoading/> : <></>}
-      <div className="grid grid-cols-3 gap-20">
-        {posts.map((post, idx) => (
-          <Card clickHandler={() => clicked(post.id)} key={idx} id={post.id} postText={''}
-                summarizeText={post.summarizeText}/>
-        ))}
-      </div>
-    </div>
+    return <>
+      {!posts.length ? <CardPulseLoading/> :
+        <div className="md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-5 mx-auto">
+          {posts.map((post, idx) => (
+            <Card clickHandler={() => clicked(post.id)} key={idx} id={post.id} postText={''}
+                  summarizeText={post.summarizeText}/>
+          ))}
+        </div>}
+    </>
   }
-
-  /*const postsElem = () => {
-    return <div className="">
-      {!posts.length ? <CardPulseLoading/> : <></>}
-      <div className="grid grid-cols-3 gap-3">
-      {posts.map((post, idx) => (
-
-          <div onClick={() => clicked(post.id)} className="w-72">
-            <div
-              className="card-image h-36 lg:h-auto lg:w-36 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
-              title="Woman holding a mug">
-            </div>
-            <div
-              className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
-              <div className="mb-8">
-                <div
-                  className="text-gray-900 font-bold text-xl mb-2">{post.id} {post.summarizeText ? ' - ' + post.summarizeText : ''}</div>
-                <p className="text-gray-700 text-base" dangerouslySetInnerHTML={{__html: post.postText}}></p>
-              </div>
-              <div className="flex items-center">
-                <img className="w-10 h-10 rounded-full mr-4" src="https://v1.tailwindcss.com/img/jonathan.jpg"
-                     alt="Avatar of Jonathan Reinink"/>
-                <div className="text-sm">
-                  <p className="text-gray-900 leading-none">Jonathan Reinink</p>
-                  <p className="text-gray-600">Aug 18</p>
-                </div>
-              </div>
-            </div>
-          </div>
-      ))}
-      </div>
-
-    </div>
-  }*/
-
 
   const findPostText = (id: string): string => {
     const post = posts.find(post => post.id === id);
@@ -111,15 +104,32 @@ function App() {
   }
 
   return (
-    <div className="flex m-8">
-      <NavBar/>
-      <main className="m-12">
-        <Routes>
-          <Route path="/posts/:id" element={postDetailElem()}/>
-          <Route path="/" element={postsElem()}/>
-        </Routes>
-      </main>
-    </div>);
+    <main className="flex flex-col h-screen bg-yellow-700 p-4">
+      <div className="flex flex-1 overflow-hidden">
+        <div className="flex bg-gray-100 w-56 p-4"><NavBar/></div>
+        <div className="flex flex-1 flex-col">
+          <div className="flex flex-row bg-gray-300 p-4">
+            <div className="basis-4/5">{t('welcome')}</div>
+            <div className="flex basis-1/5 divide-x-2 space-x-2">
+              <span onClick={() => setLang("de")}>DE</span>
+              <span onClick={() => setLang("tr")} className="px-2">TR</span>
+              <span onClick={() => setLang("en")} className="px-2">EN</span>
+            </div>
+          </div>
+          <div className="p-4 overflow-y-auto">
+            <Routes>
+              <Route path="/posts/:id" element={postDetailElem()}/>
+              <Route path="/about-us" element={<AboutUsPage/>}/>
+              <Route path="/news" element={postsElem()}/>
+              <Route path="/" element={<div>Dashboard</div>} />
+            </Routes>
+          </div>
+        </div>
+      </div>
+      <div className="flex bg-white p-4">
+        <FooterPage/>
+      </div>
+    </main>);
 }
 
 export default App;
