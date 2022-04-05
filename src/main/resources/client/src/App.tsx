@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
+import {Route, Routes} from "react-router";
 
 import {PostDetail} from "./components/PostDetail";
 import {CardPulseLoading} from "./components/CardPulseLoading";
 import {Card} from "./components/Card";
-import {Route, Routes} from "react-router";
-import {NavBar} from "./components/NavBar";
+import {NavSideBar} from "./components/NavSideBar";
 import {AboutUsPage} from "./pages/AboutUs";
 import {FooterPage} from "./pages/Footer";
 import i18n from "i18next";
 import {initReactI18next, useTranslation} from "react-i18next";
+import {HeaderPage} from "./pages/Header";
 
 export type H2NPost = {
   id: string;
@@ -27,9 +28,9 @@ type PostPageResponse = {
   totalPages: number;
 }
 
-const translationsTr = {welcome: 'Hoşgeldiniz'};
-const translationsEn = {welcome: 'Welcome'};
-const translationsDe = {welcome: 'Willkommen'};
+const translationsTr = {welcome: 'Hoşgeldiniz', news: 'Haberler', aboutUs: 'Hakkımızda'};
+const translationsEn = {welcome: 'Welcome', news: 'News', aboutUs: 'About Us'};
+const translationsDe = {welcome: 'Willkommen', news: 'Nachrichten', aboutUs: 'Über Uns'};
 
 i18n
   .use(initReactI18next)
@@ -58,7 +59,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log(lang);
     i18n.changeLanguage(lang);
   }, [lang]);
 
@@ -71,8 +71,7 @@ function App() {
 
   const clicked = (postId: string) => {
     setClickedPostId(postId)
-    console.log('clicked');
-    navigate(`/posts/${clickedPostId}`)
+    navigate(`/news/${clickedPostId}`)
   }
 
   const postsElem = () => {
@@ -103,25 +102,41 @@ function App() {
                   postText={findPostText(clickedPostId)}/> : <></>
   }
 
+  /*
+    const routes = [
+      {
+        path: "/",
+        element: DashboardPage,
+        breadcrumb: "Dashboard",
+      },
+      {path: "/news", element: postsElem(), breadcrumb: t('news')},
+      {
+        path: "/news/:id",
+        element: postDetailElem(),
+        breadcrumb: t('news')
+      },
+      {path: "/about-us", element: AboutUsPage, breadcrumb: t('aboutUs')},
+    ];
+
+    const breadcrumbs = useBreadcrumbs(routes);
+
+    */
+
   return (
     <main className="flex flex-col h-screen bg-yellow-700 p-4">
       <div className="flex flex-1 overflow-hidden">
-        <div className="flex bg-gray-100 w-56 p-4"><NavBar/></div>
+        <div className={`flex bg-gray-100 w-64 p-4`}><NavSideBar/></div>
         <div className="flex flex-1 flex-col">
-          <div className="flex flex-row bg-gray-300 p-4">
-            <div className="basis-4/5">{t('welcome')}</div>
-            <div className="flex basis-1/5 divide-x-2 space-x-2">
-              <span onClick={() => setLang("de")}>DE</span>
-              <span onClick={() => setLang("tr")} className="px-2">TR</span>
-              <span onClick={() => setLang("en")} className="px-2">EN</span>
-            </div>
+          <div className="flex flex-row bg-white p-4">
+            <HeaderPage setLang={setLang}/>
           </div>
           <div className="p-4 overflow-y-auto">
             <Routes>
-              <Route path="/posts/:id" element={postDetailElem()}/>
+              <Route path="/news/:id" element={postDetailElem()}/>
               <Route path="/about-us" element={<AboutUsPage/>}/>
               <Route path="/news" element={postsElem()}/>
-              <Route path="/" element={<div>Dashboard</div>} />
+              <Route path="/" element={<div>Dashboard</div>}/>
+              <Route path="/bulletin" element={<>selam</>}/>
             </Routes>
           </div>
         </div>
