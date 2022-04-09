@@ -9,8 +9,8 @@ export const RightSideFilter: FunctionComponent = () => {
   return (
     <div className="mt-32 space-y-1">
       <img src={fullscreenIcon} className="w-6 h-6 cursor-pointer hover:bg-gray-300"/>
-      <img src={pdfIcon} className="w-6 h-6 cursor-pointer hover:bg-gray-300"/>
       <img src={filterIcon} className="w-6 h-6 cursor-pointer hover:bg-gray-300"/>
+      <img src={pdfIcon} className="w-6 h-6 cursor-pointer hover:bg-gray-300"/>
       <img src={printerIcon} className="w-6 h-6 cursor-pointer hover:bg-gray-300"/>
     </div>
   );
