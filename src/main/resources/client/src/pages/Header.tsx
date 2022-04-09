@@ -27,9 +27,9 @@ export const HeaderPage: FunctionComponent<Props> = ({setLang}) => {
 
   return (
     <>
-      <div className="flex basis-3/5 items-center">
-        <img onClick={() => changeFocus(true)} src={searchIcon} className="w-6 h-6 cursor-pointer hover:bg-gray-300"/>
-        <form className="ml-2 w-96 ">
+      <div className="flex basis-6/12 items-center">
+        <img onClick={() => changeFocus(true)} src={searchIcon} className="w-4 h-4 cursor-pointer hover:bg-gray-300"/>
+        <form className="ml-2 grow">
           <input
             onBlur={() => changeFocus(false)}
             ref={inputReference}
@@ -38,13 +38,13 @@ export const HeaderPage: FunctionComponent<Props> = ({setLang}) => {
             placeholder={focus ? 'Search ...' : ''}/>
         </form>
       </div>
-      <div className="basis-1/5">{t('welcome')}</div>
-      <div className="flex basis-1/5 divide-x-2 space-x-2">
+      <div className="flex basis-2/12 items-center">{t('welcome')}</div>
+      <div className="flex flex-row items-center justify-end basis-4/12 divide-x-2 space-x-2">
         <span onClick={() => setLang("de")} className="cursor-pointer hover:bg-gray-300">DE</span>
         <span onClick={() => setLang("tr")} className="cursor-pointer hover:bg-gray-300 px-2">TR</span>
         <span onClick={() => setLang("en")} className="cursor-pointer hover:bg-gray-300 px-2">EN</span>
         <div className="px-4">
-          <img src={worldIcon} alt="world-icon" className="w-6 h-6"/>
+          <img src={worldIcon} alt="world-icon" className="w-4 h-4"/>
         </div>
       </div>
     </>

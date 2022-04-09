@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {Route, Routes} from "react-router";
 
 import {PostDetail} from "./components/PostDetail";
@@ -12,6 +12,7 @@ import {FooterPage} from "./pages/Footer";
 import i18n from "i18next";
 import {initReactI18next, useTranslation} from "react-i18next";
 import {HeaderPage} from "./pages/Header";
+import {RightSideFilter} from "./components/RightSideFilter";
 
 export type H2NPost = {
   id: string;
@@ -48,10 +49,13 @@ i18n
 function App() {
   const {t} = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation()
 
   const [lang, setLang] = useState("tr");
+  const [filterEnabled, setFilterEnabled] = useState(false);
   const [posts, setPosts] = useState<H2NPost[]>([]);
   const [clickedPostId, setClickedPostId] = useState<string>();
+
   useEffect(() => {
     setTimeout(() => {
       fetch().then();
@@ -61,6 +65,15 @@ function App() {
   useEffect(() => {
     i18n.changeLanguage(lang);
   }, [lang]);
+
+  useEffect(() => {
+    console.log('handle route change here', location)
+    if (location.pathname === '/news') {
+      setFilterEnabled(true);
+    } else {
+      setFilterEnabled(false);
+    }
+  }, [location])
 
   const fetch = async () => {
     console.warn('18.03 - 07:09');
@@ -130,14 +143,19 @@ function App() {
           <div className="flex flex-row bg-white p-4">
             <HeaderPage setLang={setLang}/>
           </div>
-          <div className="p-4 overflow-y-auto">
-            <Routes>
-              <Route path="/news/:id" element={postDetailElem()}/>
-              <Route path="/about-us" element={<AboutUsPage/>}/>
-              <Route path="/news" element={postsElem()}/>
-              <Route path="/" element={<div>Dashboard</div>}/>
-              <Route path="/bulletin" element={<>selam</>}/>
-            </Routes>
+          <div className="flex flex-row p-4 overflow-y-auto">
+            <div className="basis-11/12 grow bg-white">
+              <Routes>
+                <Route path="/news/:id" element={postDetailElem()}/>
+                <Route path="/corporate/about-us" element={<AboutUsPage/>}/>
+                <Route path="/news" element={postsElem()}/>
+                <Route path="/" element={<div>Dashboard</div>}/>
+                <Route path="/bulletin" element={<>selam</>}/>
+              </Routes>
+            </div>
+            {filterEnabled && <div className="basis-1/12 bg-yellow-200">
+              <RightSideFilter/>
+            </div> }
           </div>
         </div>
       </div>

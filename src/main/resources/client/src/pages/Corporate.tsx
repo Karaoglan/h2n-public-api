@@ -1,7 +1,7 @@
 import React, {FunctionComponent, useState} from "react";
 import {Link} from "react-router-dom";
 
-export const ProjectsSidebar: FunctionComponent = () => {
+export const CorporateSidebar: FunctionComponent = () => {
   const [collapse, setCollapse] = useState(false);
 
   return (
@@ -18,7 +18,7 @@ export const ProjectsSidebar: FunctionComponent = () => {
                 clipRule="evenodd"></path>
         </svg>
         <span className="flex-1 ml-3 text-gray-900 text-left whitespace-nowrap hover:text-white"
-        >Projects</span>
+        >Kurumsal</span>
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
              xmlns="http://www.w3.org/2000/svg">
           <path fillRule="evenodd"
@@ -28,39 +28,27 @@ export const ProjectsSidebar: FunctionComponent = () => {
       </button>
       <ul className={(!collapse ? "hidden" : "") + " py-2 space-y-2"}>
         <li>
-          <Link to="/cafe-restaurant"
+          <Link to="/corporate/about-us"
                 className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 hover:text-white dark:hover:bg-gray-700">
-            Caf&eacute; & Restaurant
+            Hakkımızda
           </Link>
         </li>
         <li>
           <Link to="/otel"
                 className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 hover:text-white dark:hover:bg-gray-700">
-            Otel
+            Hizmetler
           </Link>
         </li>
         <li>
           <Link to="/ofis"
                 className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 hover:text-white dark:hover:bg-gray-700">
-            Ofis
+            Takım
           </Link>
         </li>
         <li>
           <Link to="/rekreasyon"
                 className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 hover:text-white dark:hover:bg-gray-700">
-            Rekreasyon
-          </Link>
-        </li>
-        <li>
-          <Link to="/projects/residental"
-                className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 hover:text-white dark:hover:bg-gray-700">
-            Residental
-          </Link>
-        </li>
-        <li>
-          <Link to="/retail"
-                className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 hover:text-white dark:hover:bg-gray-700">
-            Retail
+            Kalite
           </Link>
         </li>
       </ul>
