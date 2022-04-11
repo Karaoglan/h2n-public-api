@@ -18,6 +18,8 @@ import {CafeProjectsPage} from "./pages/CafeProjects";
 import {GridIcon} from './assets/icons/Grid';
 import {HotelProjectsPage} from "./pages/HotelProjects";
 import {ProjectsListPage} from "./pages/ProjectsList";
+import {HotelProjectsDetailPage} from "./pages/HotelProjectsDetail";
+import { throttle } from 'lodash';
 
 export type H2NPost = {
   id: string;
@@ -62,6 +64,16 @@ function App() {
   const [posts, setPosts] = useState<H2NPost[]>([]);
   const [clickedPostId, setClickedPostId] = useState<string>();
   const [gridEnabled, setGridEnabled] = useState(true);
+  const [hiddenSidebar, setHiddenSidebar] = useState(false);
+
+  function calcInnerWidth() {
+    if (window.innerWidth < 650) {
+      setHiddenSidebar(true);
+    } else {
+      setHiddenSidebar(false);
+    }
+  }
+  window.addEventListener('resize', throttle(calcInnerWidth, 200))
 
   useEffect(() => {
     setTimeout(() => {
@@ -75,7 +87,7 @@ function App() {
 
   useEffect(() => {
     console.log('handle route change here', location)
-    if (location.pathname === '/news' || location.pathname === '/projects') {
+    if (location.pathname === '/news' || location.pathname === '/projects' || location.pathname.includes('/projects/hotel/')) {
       setFilterEnabled(true);
     } else {
       setFilterEnabled(false);
@@ -90,8 +102,8 @@ function App() {
   };
 
   const clicked = (postId: string) => {
-    setClickedPostId(postId)
-    navigate(`/news/${clickedPostId}`)
+    setClickedPostId(postId);
+    navigate(`/news/${clickedPostId}`);
   }
 
   const enableOrDisableGrid = (enableGrid: boolean) => {
@@ -205,7 +217,7 @@ function App() {
         <FullscreenModal content={fullscreenGridList()} clickCloseHandler={() => setFullscreenOpen(false)}/> :
         <>
           <div className="flex flex-1 overflow-hidden">
-            <div className={`flex bg-gray-100 w-64 p-4`}><NavSideBar/></div>
+            <div className={hiddenSidebar ? 'hidden' : '' + ` flex bg-gray-100 w-64 p-4`}><NavSideBar/></div>
             <div className="flex flex-1 flex-col">
               <div className="flex flex-row bg-white p-4">
                 <HeaderPage setLang={setLang}/>
@@ -225,6 +237,7 @@ function App() {
                       <Route path="/corporate/about-us" element={<AboutUsPage/>}/>
                       <Route path="/projects/cafe-restaurant" element={<CafeProjectsPage/>}/>
                       <Route path="/projects/hotel" element={<HotelProjectsPage/>}/>
+                      <Route path="/projects/hotel/:id" element={<HotelProjectsDetailPage />}/>
                       <Route path="/projects" element={<ProjectsListPage/>}/>
                       <Route path="/news" element={postsElem()}/>
                       <Route path="/" element={<div>Dashboard</div>}/>

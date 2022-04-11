@@ -1,4 +1,5 @@
 import React, {FunctionComponent} from "react";
+import {useNavigate} from "react-router-dom";
 
 type Project = {
   id: string,
@@ -6,7 +7,8 @@ type Project = {
   title: string,
   type: string,
   location: string,
-  size: number
+  size: number,
+  link?: string,
 }
 
 const PROJECTS: Project[] = [
@@ -16,7 +18,8 @@ const PROJECTS: Project[] = [
     location: 'Istabul',
     year: 2013,
     type: 'Hotel',
-    size: 30
+    size: 30,
+    link: '/projects/hotel/1'
   },
   {
     id: '2',
@@ -56,7 +59,8 @@ const PROJECTS: Project[] = [
     location: 'Istanbul - Altınşehir',
     year: 2013,
     type: 'Hotel',
-    size: 30
+    size: 30,
+    link: '/projects/hotel/6'
   },
   {
     id: '7',
@@ -96,7 +100,8 @@ const PROJECTS: Project[] = [
     location: 'Istanbul',
     year: 2013,
     type: 'Hotel',
-    size: 301
+    size: 301,
+    link: '/projects/hotel/11'
   },
   {
     id: '12',
@@ -109,6 +114,8 @@ const PROJECTS: Project[] = [
 ];
 
 export const ProjectsListPage: FunctionComponent = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -128,7 +135,10 @@ export const ProjectsListPage: FunctionComponent = () => {
               {PROJECTS.map(project =>
                 <tr className="text-gray-500 transition duration-300 ease-in-out hover:font-black">
                   <td>{project.year}</td>
-                  <td>{project.title}</td>
+                  {project.link ? <td onClick={() => navigate(`/projects/hotel/${project.id}`)}
+                                      className='text-blue-700 underline cursor-pointer'>{project.title}</td> :
+                    <td>{project.title}</td>
+                  }
                   <td>{project.type}</td>
                   <td>{project.location}</td>
                   <td>{project.size} &#13217;</td>
