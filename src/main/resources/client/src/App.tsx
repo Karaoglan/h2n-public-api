@@ -17,6 +17,7 @@ import {FullscreenModal} from "./components/FullscreenModal";
 import {CafeProjectsPage} from "./pages/CafeProjects";
 import {GridIcon} from './assets/icons/Grid';
 import {HotelProjectsPage} from "./pages/HotelProjects";
+import {ProjectsListPage} from "./pages/ProjectsList";
 
 export type H2NPost = {
   id: string;
@@ -60,7 +61,7 @@ function App() {
   const [fullscreenOpen, setFullscreenOpen] = useState(false);
   const [posts, setPosts] = useState<H2NPost[]>([]);
   const [clickedPostId, setClickedPostId] = useState<string>();
-  const [gridEnabled, setGridEnabled] = useState(false);
+  const [gridEnabled, setGridEnabled] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
@@ -74,7 +75,7 @@ function App() {
 
   useEffect(() => {
     console.log('handle route change here', location)
-    if (location.pathname === '/news') {
+    if (location.pathname === '/news' || location.pathname === '/projects') {
       setFilterEnabled(true);
     } else {
       setFilterEnabled(false);
@@ -91,6 +92,11 @@ function App() {
   const clicked = (postId: string) => {
     setClickedPostId(postId)
     navigate(`/news/${clickedPostId}`)
+  }
+
+  const enableOrDisableGrid = (enableGrid: boolean) => {
+    setGridEnabled(enableGrid);
+    if (!enableGrid) navigate('/projects');
   }
 
   const postsElem = () => {
@@ -209,7 +215,8 @@ function App() {
                   <div className="flex flex-row">
                     <div className="basis-4/5 text-xl">Projeler / Cafe-Restaurant</div>
                     <div className="flex basis-1/5 justify-end">
-                      <GridIcon onClick={() => setGridEnabled(!gridEnabled)} width="w-4" height="h-4" fill={gridEnabled ? '#c2c4cf' : '#000'}/>
+                      <GridIcon onClick={() => enableOrDisableGrid(!gridEnabled)} width="w-4" height="h-4"
+                                fill={gridEnabled ? '#000' : '#c2c4cf'}/>
                     </div>
                   </div>
                   <div>
@@ -218,6 +225,7 @@ function App() {
                       <Route path="/corporate/about-us" element={<AboutUsPage/>}/>
                       <Route path="/projects/cafe-restaurant" element={<CafeProjectsPage/>}/>
                       <Route path="/projects/hotel" element={<HotelProjectsPage/>}/>
+                      <Route path="/projects" element={<ProjectsListPage/>}/>
                       <Route path="/news" element={postsElem()}/>
                       <Route path="/" element={<div>Dashboard</div>}/>
                       <Route path="/bulletin" element={<>selam</>}/>

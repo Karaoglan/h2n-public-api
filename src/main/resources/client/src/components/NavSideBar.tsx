@@ -1,14 +1,14 @@
 import React, {FunctionComponent} from "react";
 import {Link} from "react-router-dom";
-import {ProjectsSidebar} from "./Projects";
+import {ProjectsSidebar} from "./ProjectsSidebar";
 import {useTranslation} from "react-i18next";
-import {CorporateSidebar} from "../pages/Corporate";
+import {CorporateSidebar} from "./CorporateSidebar";
 
 export const NavSideBar: FunctionComponent = () => {
   const {t} = useTranslation();
 
   return (
-    <div className="">
+    <div className="overflow-y-auto">
       <ul className="space-y-2">
         <li>
           <CorporateSidebar/>
