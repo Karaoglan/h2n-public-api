@@ -44,7 +44,7 @@ export const HeaderPage: FunctionComponent<Props> = ({setLang, hiddenSidebar, co
             placeholder={focus ? 'Search ...' : ''}/>
         </form>
       </div>
-      <div className="flex basis-2/12 items-center">{t('welcome')}</div>
+      <div className="flex basis-2/12 items-center ml-2">{t('welcome')}</div>
       <div className="flex flex-row items-center justify-end basis-4/12 divide-x-2 space-x-2">
         <span onClick={() => setLang("de")} className="cursor-pointer hover:bg-gray-300">DE</span>
         <span onClick={() => setLang("tr")} className="cursor-pointer hover:bg-gray-300 px-2">TR</span>
