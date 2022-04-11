@@ -2,13 +2,17 @@ import React, {FunctionComponent, useRef, useState} from "react";
 import {useTranslation} from "react-i18next";
 import worldIcon from "../assets/icons/world.svg";
 import searchIcon from "../assets/icons/search.svg";
+import sidebarActiveIcon from "../assets/icons/sidebarActive.svg";
+import closeSidebarIcon from "../assets/icons/closeSidebar.svg";
 import {StringBuilder} from "../utils/StringBuilder";
 
 type Props = {
-  setLang: (lng: string) => void
+  setLang: (lng: string) => void,
+  hiddenSidebar: boolean,
+  collapseSidebar: React.EventHandler<any>;
 }
 
-export const HeaderPage: FunctionComponent<Props> = ({setLang}) => {
+export const HeaderPage: FunctionComponent<Props> = ({setLang, hiddenSidebar, collapseSidebar}) => {
   const inputReference = useRef<HTMLInputElement>(null);
   const [focus, setFocus] = useState(false);
   const {t} = useTranslation();
@@ -27,7 +31,9 @@ export const HeaderPage: FunctionComponent<Props> = ({setLang}) => {
 
   return (
     <>
-      <div className="flex basis-6/12 items-center">
+      <div className="flex basis-6/12 items-center space-x-2">
+        {hiddenSidebar && <img onClick={collapseSidebar} src={sidebarActiveIcon} className="w-4 h-4 cursor-pointer hover:bg-gray-300"/>}
+        {!hiddenSidebar && <img onClick={collapseSidebar} src={closeSidebarIcon} className="w-4 h-4 cursor-pointer hover:bg-gray-300"/>}
         <img onClick={() => changeFocus(true)} src={searchIcon} className="w-4 h-4 cursor-pointer hover:bg-gray-300"/>
         <form className="ml-2 grow">
           <input

@@ -220,7 +220,7 @@ function App() {
             <div className={hiddenSidebar ? 'hidden' : '' + ` flex bg-gray-100 w-64 p-4`}><NavSideBar/></div>
             <div className="flex flex-1 flex-col">
               <div className="flex flex-row bg-white p-4">
-                <HeaderPage setLang={setLang}/>
+                <HeaderPage collapseSidebar={() => setHiddenSidebar(!hiddenSidebar)} hiddenSidebar={hiddenSidebar} setLang={setLang}/>
               </div>
               <div className="flex flex-row p-4 overflow-y-auto">
                 <div className="flex flex-col basis-11/12 space-y-4 grow bg-white">
