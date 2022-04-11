@@ -90,7 +90,7 @@ export const HotelProjectsPage: FunctionComponent = () => {
     <div className="grid grid-cols-3 gap-4 text-lg">
       {HOTELS.map(hotel => (
         <div className="flex flex-col gap-1">
-          <div className="object-fill h-96">
+          <div className="aspect-w-16 aspect-h-9">
             <img src={hotel.img}/>
           </div>
           <div>{hotel.title}</div>

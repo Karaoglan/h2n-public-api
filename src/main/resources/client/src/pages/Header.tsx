@@ -7,12 +7,13 @@ import closeSidebarIcon from "../assets/icons/closeSidebar.svg";
 import {StringBuilder} from "../utils/StringBuilder";
 
 type Props = {
+  currentLang: string,
   setLang: (lng: string) => void,
   hiddenSidebar: boolean,
   collapseSidebar: React.EventHandler<any>;
 }
 
-export const HeaderPage: FunctionComponent<Props> = ({setLang, hiddenSidebar, collapseSidebar}) => {
+export const HeaderPage: FunctionComponent<Props> = ({currentLang, setLang, hiddenSidebar, collapseSidebar}) => {
   const inputReference = useRef<HTMLInputElement>(null);
   const [focus, setFocus] = useState(false);
   const {t} = useTranslation();
@@ -29,11 +30,17 @@ export const HeaderPage: FunctionComponent<Props> = ({setLang, hiddenSidebar, co
     .append(focus ? 'bg-white shadow appearance-none border' : '')
     .build();
 
+  const markLangOrNothing = (lang: string) => {
+    return lang === currentLang ? 'font-black' : '';
+  }
+
   return (
     <>
       <div className="flex basis-6/12 items-center space-x-2">
-        {hiddenSidebar && <img onClick={collapseSidebar} src={sidebarActiveIcon} className="w-4 h-4 cursor-pointer hover:bg-gray-300"/>}
-        {!hiddenSidebar && <img onClick={collapseSidebar} src={closeSidebarIcon} className="w-4 h-4 cursor-pointer hover:bg-gray-300"/>}
+        {hiddenSidebar &&
+          <img onClick={collapseSidebar} src={sidebarActiveIcon} className="w-4 h-4 cursor-pointer hover:bg-gray-300"/>}
+        {!hiddenSidebar &&
+          <img onClick={collapseSidebar} src={closeSidebarIcon} className="w-4 h-4 cursor-pointer hover:bg-gray-300"/>}
         <img onClick={() => changeFocus(true)} src={searchIcon} className="w-4 h-4 cursor-pointer hover:bg-gray-300"/>
         <form className="ml-2 grow">
           <input
@@ -41,14 +48,14 @@ export const HeaderPage: FunctionComponent<Props> = ({setLang, hiddenSidebar, co
             ref={inputReference}
             className={inputClasses}
             id="username" type="text"
-            placeholder={focus ? 'Search ...' : ''}/>
+            placeholder={focus ? 'Ara ...' : ''}/>
         </form>
       </div>
       <div className="flex basis-2/12 items-center ml-2">{t('welcome')}</div>
       <div className="flex flex-row items-center justify-end basis-4/12 divide-x-2 space-x-2">
-        <span onClick={() => setLang("de")} className="cursor-pointer hover:bg-gray-300">DE</span>
-        <span onClick={() => setLang("tr")} className="cursor-pointer hover:bg-gray-300 px-2">TR</span>
-        <span onClick={() => setLang("en")} className="cursor-pointer hover:bg-gray-300 px-2">EN</span>
+        <span onClick={() => setLang("de")} className={`${markLangOrNothing('de')} cursor-pointer hover:bg-gray-300`}>DE</span>
+        <span onClick={() => setLang("tr")} className={`${markLangOrNothing('tr')} cursor-pointer hover:bg-gray-300 px-2`}>TR</span>
+        <span onClick={() => setLang("en")} className={`${markLangOrNothing('en')} cursor-pointer hover:bg-gray-300 px-2`}>EN</span>
         <div className="px-4">
           <img src={worldIcon} alt="world-icon" className="w-4 h-4"/>
         </div>

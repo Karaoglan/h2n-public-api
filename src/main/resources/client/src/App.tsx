@@ -95,7 +95,6 @@ function App() {
   }, [location])
 
   const fetch = async () => {
-    console.warn('18.03 - 07:09');
     const response = await axios.get<PostPageResponse>('/posts?pageNumber=0&pageSize=20');
     setPosts(response.data.content);
     // TODO pagination
@@ -212,7 +211,7 @@ function App() {
   }
 
   return (
-    <main className="flex flex-col h-screen bg-yellow-700 p-4">
+    <main className="flex flex-col h-screen p-4 sm:px-32">
       {fullscreenOpen ?
         <FullscreenModal content={fullscreenGridList()} clickCloseHandler={() => setFullscreenOpen(false)}/> :
         <>
@@ -220,7 +219,7 @@ function App() {
             <div className={hiddenSidebar ? 'hidden' : '' + ` flex bg-gray-100 w-64 p-4`}><NavSideBar/></div>
             <div className="flex flex-1 flex-col">
               <div className="flex flex-row bg-white p-4">
-                <HeaderPage collapseSidebar={() => setHiddenSidebar(!hiddenSidebar)} hiddenSidebar={hiddenSidebar} setLang={setLang}/>
+                <HeaderPage currentLang={lang} collapseSidebar={() => setHiddenSidebar(!hiddenSidebar)} hiddenSidebar={hiddenSidebar} setLang={setLang}/>
               </div>
               <div className="flex flex-row p-4 overflow-y-auto">
                 <div className="flex flex-col basis-11/12 space-y-4 grow bg-white">
@@ -245,7 +244,7 @@ function App() {
                     </Routes>
                   </div>
                 </div>
-                {filterEnabled && <div className="basis-1/12 bg-yellow-200">
+                {filterEnabled && <div className="basis-1/12">
                   <RightSideFilter clickCloseHandler={() => setFullscreenOpen(true)}/>
                 </div>}
               </div>
