@@ -1,5 +1,5 @@
 import React, {FunctionComponent, useEffect} from "react";
-import closeIcon from "./icons/close-esc.svg";
+import closeIcon from "../assets/icons/close-esc.svg";
 
 export type ModalParams = {
   content?: JSX.Element,

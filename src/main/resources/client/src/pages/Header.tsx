@@ -1,7 +1,7 @@
 import React, {FunctionComponent, useRef, useState} from "react";
 import {useTranslation} from "react-i18next";
-import worldIcon from "../components/icons/world.svg";
-import searchIcon from "../components/icons/search.svg";
+import worldIcon from "../assets/icons/world.svg";
+import searchIcon from "../assets/icons/search.svg";
 import {StringBuilder} from "../utils/StringBuilder";
 
 type Props = {

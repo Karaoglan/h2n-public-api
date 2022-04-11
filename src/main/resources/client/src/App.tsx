@@ -15,7 +15,8 @@ import {HeaderPage} from "./pages/Header";
 import {RightSideFilter} from "./components/RightSideFilter";
 import {FullscreenModal} from "./components/FullscreenModal";
 import {CafeProjectsPage} from "./pages/CafeProjects";
-import gridIcon from './components/icons/grid.svg';
+import {GridIcon} from './assets/icons/Grid';
+import {HotelProjectsPage} from "./pages/HotelProjects";
 
 export type H2NPost = {
   id: string;
@@ -59,6 +60,7 @@ function App() {
   const [fullscreenOpen, setFullscreenOpen] = useState(false);
   const [posts, setPosts] = useState<H2NPost[]>([]);
   const [clickedPostId, setClickedPostId] = useState<string>();
+  const [gridEnabled, setGridEnabled] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -207,7 +209,7 @@ function App() {
                   <div className="flex flex-row">
                     <div className="basis-4/5 text-xl">Projeler / Cafe-Restaurant</div>
                     <div className="flex basis-1/5 justify-end">
-                      <img src={gridIcon} alt="grid-icon" className="w-4 h-4" />
+                      <GridIcon onClick={() => setGridEnabled(!gridEnabled)} width="w-4" height="h-4" fill={gridEnabled ? '#c2c4cf' : '#000'}/>
                     </div>
                   </div>
                   <div>
@@ -215,6 +217,7 @@ function App() {
                       <Route path="/news/:id" element={postDetailElem()}/>
                       <Route path="/corporate/about-us" element={<AboutUsPage/>}/>
                       <Route path="/projects/cafe-restaurant" element={<CafeProjectsPage/>}/>
+                      <Route path="/projects/hotel" element={<HotelProjectsPage/>}/>
                       <Route path="/news" element={postsElem()}/>
                       <Route path="/" element={<div>Dashboard</div>}/>
                       <Route path="/bulletin" element={<>selam</>}/>

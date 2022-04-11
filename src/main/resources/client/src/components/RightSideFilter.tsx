@@ -1,8 +1,8 @@
 import React, {FunctionComponent} from "react";
-import fullscreenIcon from "./icons/fullscreen.svg";
-import pdfIcon from "./icons/pdf.svg";
-import filterIcon from "./icons/filter.svg";
-import printerIcon from "./icons/printer.svg";
+import fullscreenIcon from "../assets/icons/fullscreen.svg";
+import pdfIcon from "../assets/icons/pdf.svg";
+import filterIcon from "../assets/icons/filter.svg";
+import printerIcon from "../assets/icons/printer.svg";
 import {ModalParams} from "./FullscreenModal";
 
 export const RightSideFilter: FunctionComponent<ModalParams> = ({clickCloseHandler}) => {
