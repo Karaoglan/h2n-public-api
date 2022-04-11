@@ -13,6 +13,9 @@ import i18n from "i18next";
 import {initReactI18next, useTranslation} from "react-i18next";
 import {HeaderPage} from "./pages/Header";
 import {RightSideFilter} from "./components/RightSideFilter";
+import {FullscreenModal} from "./components/FullscreenModal";
+import {CafeProjectsPage} from "./pages/CafeProjects";
+import gridIcon from './components/icons/grid.svg';
 
 export type H2NPost = {
   id: string;
@@ -53,6 +56,7 @@ function App() {
 
   const [lang, setLang] = useState("tr");
   const [filterEnabled, setFilterEnabled] = useState(false);
+  const [fullscreenOpen, setFullscreenOpen] = useState(false);
   const [posts, setPosts] = useState<H2NPost[]>([]);
   const [clickedPostId, setClickedPostId] = useState<string>();
 
@@ -134,34 +138,100 @@ function App() {
     const breadcrumbs = useBreadcrumbs(routes);
 
     */
+  const image = 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg';
 
-  return (
-    <main className="flex flex-col h-screen bg-yellow-700 p-4">
-      <div className="flex flex-1 overflow-hidden">
-        <div className={`flex bg-gray-100 w-64 p-4`}><NavSideBar/></div>
-        <div className="flex flex-1 flex-col">
-          <div className="flex flex-row bg-white p-4">
-            <HeaderPage setLang={setLang}/>
+  function fullscreenGridList() {
+    return (
+      <div className="md:grid md:grid-cols-3 xl:grid-cols-4 md:gap-5 mx-auto">
+        <div className="flex flex-col w-64 h-64">
+          <div className="w-full h-full bg-contain bg-no-repeat"
+               style={{backgroundImage: `url(${image})`}}>
           </div>
-          <div className="flex flex-row p-4 overflow-y-auto">
-            <div className="basis-11/12 grow bg-white">
-              <Routes>
-                <Route path="/news/:id" element={postDetailElem()}/>
-                <Route path="/corporate/about-us" element={<AboutUsPage/>}/>
-                <Route path="/news" element={postsElem()}/>
-                <Route path="/" element={<div>Dashboard</div>}/>
-                <Route path="/bulletin" element={<>selam</>}/>
-              </Routes>
-            </div>
-            {filterEnabled && <div className="basis-1/12 bg-yellow-200">
-              <RightSideFilter/>
-            </div> }
+          <div>
+            Proje adı üst satır1
+          </div>
+          <div>
+            Proje adı alt satır1
+          </div>
+        </div>
+        <div className="flex flex-col w-64 h-64">
+          <div className="flex w-full h-full bg-contain bg-no-repeat"
+               style={{backgroundImage: `url(${image})`}}>
+          </div>
+          <div>
+            Proje adı üst satır2
+          </div>
+          <div>
+            Proje adı alt satır2
+          </div>
+        </div>
+        <div className="flex flex-col w-64 h-64">
+          <div className="w-full h-full bg-contain bg-no-repeat"
+               style={{backgroundImage: `url(${image})`}}>
+          </div>
+          <div>
+            Proje adı üst satır3
+          </div>
+          <div>
+            Proje adı alt satır3
+          </div>
+        </div>
+        <div className="flex flex-col w-64 h-64">
+          <div className="w-full h-full bg-contain bg-no-repeat"
+               style={{backgroundImage: `url(${image})`}}>
+          </div>
+          <div>
+            Proje adı üst satır4
+          </div>
+          <div>
+            Proje adı alt satır4
           </div>
         </div>
       </div>
-      <div className="flex bg-white p-4">
-        <FooterPage/>
-      </div>
+    );
+  }
+
+  return (
+    <main className="flex flex-col h-screen bg-yellow-700 p-4">
+      {fullscreenOpen ?
+        <FullscreenModal content={fullscreenGridList()} clickCloseHandler={() => setFullscreenOpen(false)}/> :
+        <>
+          <div className="flex flex-1 overflow-hidden">
+            <div className={`flex bg-gray-100 w-64 p-4`}><NavSideBar/></div>
+            <div className="flex flex-1 flex-col">
+              <div className="flex flex-row bg-white p-4">
+                <HeaderPage setLang={setLang}/>
+              </div>
+              <div className="flex flex-row p-4 overflow-y-auto">
+                <div className="flex flex-col basis-11/12 space-y-4 grow bg-white">
+                  <div className="flex flex-row">
+                    <div className="basis-4/5 text-xl">Projeler / Cafe-Restaurant</div>
+                    <div className="flex basis-1/5 justify-end">
+                      <img src={gridIcon} alt="grid-icon" className="w-4 h-4" />
+                    </div>
+                  </div>
+                  <div>
+                    <Routes>
+                      <Route path="/news/:id" element={postDetailElem()}/>
+                      <Route path="/corporate/about-us" element={<AboutUsPage/>}/>
+                      <Route path="/projects/cafe-restaurant" element={<CafeProjectsPage/>}/>
+                      <Route path="/news" element={postsElem()}/>
+                      <Route path="/" element={<div>Dashboard</div>}/>
+                      <Route path="/bulletin" element={<>selam</>}/>
+                    </Routes>
+                  </div>
+                </div>
+                {filterEnabled && <div className="basis-1/12 bg-yellow-200">
+                  <RightSideFilter clickCloseHandler={() => setFullscreenOpen(true)}/>
+                </div>}
+              </div>
+            </div>
+          </div>
+          <div className="flex bg-white p-4">
+            <FooterPage/>
+          </div>
+        </>
+      }
     </main>);
 }
 

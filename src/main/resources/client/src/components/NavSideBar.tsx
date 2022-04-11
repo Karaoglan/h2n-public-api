@@ -1,6 +1,6 @@
 import React, {FunctionComponent} from "react";
 import {Link} from "react-router-dom";
-import {ProjectsSidebar} from "../pages/Projects";
+import {ProjectsSidebar} from "./Projects";
 import {useTranslation} from "react-i18next";
 import {CorporateSidebar} from "../pages/Corporate";
 

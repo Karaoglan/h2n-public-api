@@ -28,7 +28,7 @@ export const ProjectsSidebar: FunctionComponent = () => {
       </button>
       <ul className={(!collapse ? "hidden" : "") + " py-2 space-y-2"}>
         <li>
-          <Link to="/cafe-restaurant"
+          <Link to="/projects/cafe-restaurant"
                 className="flex items-center p-2 pl-11 w-full text-sm md:text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 hover:text-white dark:hover:bg-gray-700">
             Caf&eacute; & Restaurant
           </Link>
