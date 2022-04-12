@@ -36,7 +36,7 @@ export const HeaderPage: FunctionComponent<Props> = ({currentLang, setLang, hidd
 
   return (
     <>
-      <div className="flex basis-6/12 items-center space-x-2">
+      <div className="flex basis-7/12 items-center space-x-2">
         {hiddenSidebar &&
           <img onClick={collapseSidebar} src={sidebarActiveIcon} className="w-4 h-4 cursor-pointer hover:bg-gray-300"/>}
         {!hiddenSidebar &&
@@ -51,8 +51,7 @@ export const HeaderPage: FunctionComponent<Props> = ({currentLang, setLang, hidd
             placeholder={focus ? 'Ara ...' : ''}/>
         </form>
       </div>
-      <div className="flex basis-2/12 items-center ml-2">{t('welcome')}</div>
-      <div className="flex flex-row items-center justify-end basis-4/12 divide-x-2 space-x-2">
+      <div className="flex flex-row items-center justify-end basis-5/12 divide-x-2 space-x-2">
         <span onClick={() => setLang("de")} className={`${markLangOrNothing('de')} cursor-pointer hover:bg-gray-300`}>DE</span>
         <span onClick={() => setLang("tr")} className={`${markLangOrNothing('tr')} cursor-pointer hover:bg-gray-300 px-2`}>TR</span>
         <span onClick={() => setLang("en")} className={`${markLangOrNothing('en')} cursor-pointer hover:bg-gray-300 px-2`}>EN</span>

@@ -1,8 +1,10 @@
 import React, {FunctionComponent, useState} from "react";
 import {Link} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 export const CorporateSidebar: FunctionComponent = () => {
   const [collapse, setCollapse] = useState(false);
+  const {t} = useTranslation();
 
   return (
     <div>
@@ -30,7 +32,7 @@ export const CorporateSidebar: FunctionComponent = () => {
         <li>
           <Link to="/corporate/about-us"
                 className="flex items-center p-2 pl-11 w-full text-sm md:text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 hover:text-white dark:hover:bg-gray-700">
-            Hakkımızda
+            {t('aboutUs')}
           </Link>
         </li>
         <li>
