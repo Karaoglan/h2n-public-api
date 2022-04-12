@@ -93,7 +93,7 @@ export const HotelProjectsPage: FunctionComponent = () => {
           <div className="aspect-w-16 aspect-h-9">
             <img src={hotel.img}/>
           </div>
-          <div>{hotel.title}</div>
+          <div className="">{hotel.title}</div>
           <div>{hotel.subTitle}</div>
         </div>
       ))}

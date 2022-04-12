@@ -76,6 +76,9 @@ function App() {
   window.addEventListener('resize', throttle(calcInnerWidth, 200))
 
   useEffect(() => {
+    if (window.innerWidth < 650) {
+      setHiddenSidebar(true);
+    }
     setTimeout(() => {
       fetch().then();
     }, 2000);
@@ -211,7 +214,7 @@ function App() {
   }
 
   return (
-    <main className="flex flex-col h-screen p-4 sm:px-32">
+    <main className="flex flex-col h-screen p-4 lg:px-32">
       {fullscreenOpen ?
         <FullscreenModal content={fullscreenGridList()} clickCloseHandler={() => setFullscreenOpen(false)}/> :
         <>
