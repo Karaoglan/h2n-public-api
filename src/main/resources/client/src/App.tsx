@@ -214,12 +214,12 @@ function App() {
   }
 
   return (
-    <main className="flex flex-col h-screen p-4 lg:px-32">
+    <main className="flex flex-col h-screen p-4 lg:px-64">
       {fullscreenOpen ?
         <FullscreenModal content={fullscreenGridList()} clickCloseHandler={() => setFullscreenOpen(false)}/> :
         <>
           <div className="flex flex-1 overflow-hidden">
-            <div className={hiddenSidebar ? 'hidden' : '' + ` flex bg-gray-100 w-64 p-4`}><NavSideBar/></div>
+            <div className={hiddenSidebar ? 'hidden' : '' + ` flex bg-gray-100 w-96 p-4`}><NavSideBar/></div>
             <div className="flex flex-1 flex-col">
               <div className="flex flex-row bg-white p-4">
                 <HeaderPage currentLang={lang} collapseSidebar={() => setHiddenSidebar(!hiddenSidebar)} hiddenSidebar={hiddenSidebar} setLang={setLang}/>

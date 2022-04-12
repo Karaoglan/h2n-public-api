@@ -39,7 +39,7 @@ export const HeaderPage: FunctionComponent<Props> = ({currentLang, setLang, hidd
       <div className="flex basis-7/12 items-center space-x-2">
         {hiddenSidebar &&
           <img onClick={collapseSidebar} src={sidebarActiveIcon} className="w-4 h-4 cursor-pointer hover:bg-gray-300"/>}
-        {!hiddenSidebar &&
+        {window.innerWidth <= 650 && !hiddenSidebar &&
           <img onClick={collapseSidebar} src={closeSidebarIcon} className="w-4 h-4 cursor-pointer hover:bg-gray-300"/>}
         <img onClick={() => changeFocus(true)} src={searchIcon} className="w-4 h-4 cursor-pointer hover:bg-gray-300"/>
         <form className="ml-2 grow">
