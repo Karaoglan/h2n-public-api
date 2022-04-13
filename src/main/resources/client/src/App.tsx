@@ -1,17 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import axios from 'axios';
-import {useLocation, useNavigate} from "react-router-dom";
+import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import {Route, Routes} from "react-router";
 
-import {PostDetail} from "./components/PostDetail";
-import {CardPulseLoading} from "./components/CardPulseLoading";
-import {Card} from "./components/Card";
+import {NewsDetail} from "./pages/NewsDetail";
 import {NavSideBar} from "./components/NavSideBar";
 import {AboutUsPage} from "./pages/AboutUs";
-import {FooterPage} from "./pages/Footer";
+import {FooterPage} from "./components/Footer";
 import i18n from "i18next";
 import {initReactI18next, useTranslation} from "react-i18next";
-import {HeaderPage} from "./pages/Header";
+import {HeaderPage} from "./components/Header";
 import {RightSideFilter} from "./components/RightSideFilter";
 import {FullscreenModal} from "./components/FullscreenModal";
 import {CafeProjectsPage} from "./pages/CafeProjects";
@@ -19,26 +16,11 @@ import {GridIcon} from './assets/icons/Grid';
 import {HotelProjectsPage} from "./pages/HotelProjects";
 import {ProjectsListPage} from "./pages/ProjectsList";
 import {HotelProjectsDetailPage} from "./pages/HotelProjectsDetail";
-import { throttle } from 'lodash';
-
-export type H2NPost = {
-  id: string;
-  summarizeText: string;
-  postText: string;
-  clickHandler?: React.MouseEventHandler<HTMLDivElement>;
-}
-
-type PostPageResponse = {
-  content: H2NPost[];
-  pageNumber: number;
-  pageSize: number;
-  totalElements: number;
-  totalPages: number;
-}
-
-const translationsTr = {welcome: 'Hoşgeldiniz', news: 'Haberler', aboutUs: 'Hakkımızda'};
-const translationsEn = {welcome: 'Welcome', news: 'News', aboutUs: 'About Us'};
-const translationsDe = {welcome: 'Willkommen', news: 'Nachrichten', aboutUs: 'Über Uns'};
+import {throttle} from 'lodash';
+import {DashboardPage} from "./pages/Dashboard";
+import useReactRouterBreadcrumbs from "use-react-router-breadcrumbs";
+import {H2NPost, NewsPage} from "./pages/News";
+import {translationsDe, translationsEn, translationsTr} from "./assets/i18n";
 
 i18n
   .use(initReactI18next)
@@ -61,10 +43,9 @@ function App() {
   const [lang, setLang] = useState("tr");
   const [filterEnabled, setFilterEnabled] = useState(false);
   const [fullscreenOpen, setFullscreenOpen] = useState(false);
-  const [posts, setPosts] = useState<H2NPost[]>([]);
-  const [clickedPostId, setClickedPostId] = useState<string>();
   const [gridEnabled, setGridEnabled] = useState(true);
   const [hiddenSidebar, setHiddenSidebar] = useState(false);
+  const [posts, setPosts] = useState<H2NPost[]>([]);
 
   function calcInnerWidth() {
     if (window.innerWidth < 650) {
@@ -73,15 +54,13 @@ function App() {
       setHiddenSidebar(false);
     }
   }
+
   window.addEventListener('resize', throttle(calcInnerWidth, 200))
 
   useEffect(() => {
     if (window.innerWidth < 650) {
       setHiddenSidebar(true);
     }
-    setTimeout(() => {
-      fetch().then();
-    }, 2000);
   }, []);
 
   useEffect(() => {
@@ -97,69 +76,23 @@ function App() {
     }
   }, [location])
 
-  const fetch = async () => {
-    const response = await axios.get<PostPageResponse>('/posts?pageNumber=0&pageSize=20');
-    setPosts(response.data.content);
-    // TODO pagination
-  };
-
-  const clicked = (postId: string) => {
-    setClickedPostId(postId);
-    navigate(`/news/${clickedPostId}`);
-  }
-
   const enableOrDisableGrid = (enableGrid: boolean) => {
     setGridEnabled(enableGrid);
     if (!enableGrid) navigate('/projects');
   }
 
-  const postsElem = () => {
-    return <>
-      {!posts.length ? <CardPulseLoading/> :
-        <div className="md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-5 mx-auto">
-          {posts.map((post, idx) => (
-            <Card clickHandler={() => clicked(post.id)} key={idx} id={post.id} postText={''}
-                  summarizeText={post.summarizeText}/>
-          ))}
-        </div>}
-    </>
-  }
+  const routes = [
+    {
+      path: "/",
+      element: DashboardPage,
+      breadcrumb: "",
+    },
+    {path: "/news", element: NewsPage, breadcrumb: t('news')},
+    {path: "/corporate/about-us", element: AboutUsPage, breadcrumb: t('aboutUs')},
+  ];
 
-  const findPostText = (id: string): string => {
-    const post = posts.find(post => post.id === id);
-    return post ? post.postText : '';
-  }
+  const breadcrumbs = useReactRouterBreadcrumbs(routes);
 
-  const findSummarizeText = (id: string): string => {
-    const post = posts.find(post => post.id === id);
-    return post ? post.summarizeText : '';
-  }
-
-  const postDetailElem = () => {
-    return clickedPostId ?
-      <PostDetail postId={clickedPostId} summarizeText={findSummarizeText(clickedPostId)}
-                  postText={findPostText(clickedPostId)}/> : <></>
-  }
-
-  /*
-    const routes = [
-      {
-        path: "/",
-        element: DashboardPage,
-        breadcrumb: "Dashboard",
-      },
-      {path: "/news", element: postsElem(), breadcrumb: t('news')},
-      {
-        path: "/news/:id",
-        element: postDetailElem(),
-        breadcrumb: t('news')
-      },
-      {path: "/about-us", element: AboutUsPage, breadcrumb: t('aboutUs')},
-    ];
-
-    const breadcrumbs = useBreadcrumbs(routes);
-
-    */
   const image = 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg';
 
   function fullscreenGridList() {
@@ -222,12 +155,22 @@ function App() {
             <div className={hiddenSidebar ? 'hidden' : '' + ` flex w-96 p-4`}><NavSideBar/></div>
             <div className="flex flex-1 flex-col">
               <div className="flex flex-row bg-white p-4">
-                <HeaderPage currentLang={lang} collapseSidebar={() => setHiddenSidebar(!hiddenSidebar)} hiddenSidebar={hiddenSidebar} setLang={setLang}/>
+                <HeaderPage currentLang={lang} collapseSidebar={() => setHiddenSidebar(!hiddenSidebar)}
+                            hiddenSidebar={hiddenSidebar} setLang={setLang}/>
               </div>
               <div className="flex flex-row p-4 overflow-y-auto">
                 <div className="flex flex-col basis-11/12 space-y-4 grow bg-white">
                   <div className="flex flex-row">
-                    <div className="basis-4/5 text-xl">Projeler / Cafe-Restaurant</div>
+                    <div className="basis-4/5 text-xl divide-x-2 space-x-2">
+                      {breadcrumbs.map(({
+                                          match,
+                                          breadcrumb
+                                        }) => (
+                        <span key={match.pathname}>
+                          <NavLink to={match.pathname}>{breadcrumb}</NavLink>
+                        </span>
+                      ))}
+                    </div>
                     <div className="flex basis-1/5 justify-end">
                       <GridIcon onClick={() => enableOrDisableGrid(!gridEnabled)} width="w-4" height="h-4"
                                 fill={gridEnabled ? '#000' : '#c2c4cf'}/>
@@ -235,13 +178,13 @@ function App() {
                   </div>
                   <div>
                     <Routes>
-                      <Route path="/news/:id" element={postDetailElem()}/>
                       <Route path="/corporate/about-us" element={<AboutUsPage/>}/>
                       <Route path="/projects/cafe-restaurant" element={<CafeProjectsPage/>}/>
                       <Route path="/projects/hotel" element={<HotelProjectsPage/>}/>
-                      <Route path="/projects/hotel/:id" element={<HotelProjectsDetailPage />}/>
+                      <Route path="/projects/hotel/:id" element={<HotelProjectsDetailPage/>}/>
                       <Route path="/projects" element={<ProjectsListPage/>}/>
-                      <Route path="/news" element={postsElem()}/>
+                      <Route path="/news" element={<NewsPage updatePosts={setPosts}/>}/>
+                      <Route path="/news/:id" element={<NewsDetail allPosts={posts}/>}/>
                       <Route path="/" element={<div>Dashboard</div>}/>
                       <Route path="/bulletin" element={<>selam</>}/>
                     </Routes>

@@ -1,5 +1,5 @@
 import React, {FunctionComponent} from "react";
-import {H2NPost} from "../App";
+import {H2NPost} from "../pages/News";
 
 export const Card: FunctionComponent<H2NPost> = ({id, summarizeText, postText, clickHandler}) => {
   const image = 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg';

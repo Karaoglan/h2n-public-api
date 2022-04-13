@@ -59,8 +59,6 @@ export const HotelProjectsDetailPage: FunctionComponent = () => {
             </div>
           </div>
         </div>
-
-
       </div>
       <div className="flex flex-row">
         <div className="flex grow justify-start text-lg font-black">{PROJECT_DETAIL.title}</div>
