@@ -1,67 +1,58 @@
-import React, {FunctionComponent} from "react";
+import React, {FunctionComponent, useState} from "react";
 import {Link} from "react-router-dom";
 import {ProjectsSidebar} from "./ProjectsSidebar";
 import {useTranslation} from "react-i18next";
 import {CorporateSidebar} from "./CorporateSidebar";
 
 export const NavSideBar: FunctionComponent = () => {
+  const [openProject, setOpenProject] = useState(false);
+  const [openCorporate, setOpenCorporate] = useState(false);
   const {t} = useTranslation();
 
   return (
     <div className="overflow-y-auto">
-      <ul className="space-y-2">
+      <ul>
         <li>
-          <CorporateSidebar/>
+          <CorporateSidebar closeCollapse={openCorporate}
+                            clickCollapse={() => {
+                              setOpenCorporate(!openCorporate);
+                              if (!openCorporate) {
+                                setOpenProject(false);
+                              }
+                            }}/>
         </li>
         <li>
-          <ProjectsSidebar/>
+          <ProjectsSidebar closeCollapse={openProject}
+                           clickCollapse={() => {
+                             setOpenProject(!openProject);
+                             if (!openProject) {
+                               setOpenCorporate(false);
+                             }
+                           }}/>
         </li>
         <li className="">
           <Link to="/products-design"
-                className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-gray-900 hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-            <svg
-              className="w-4 h-4 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-              fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-              <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-            </svg>
-            <span className="ml-3 text-sm md:text-base">Ürün Tasarımları</span>
+                className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-500 hover:text-white">
+
+            <span className="ml-3 text-sm">Ürün Tasarımları</span>
           </Link>
         </li>
         <li>
           <Link to="/news"
-                className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-gray-900 hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-            <svg
-              className="w-4 h-4 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-              fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-              <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-            </svg>
-            <span className="ml-3 text-sm md:text-base">{t('news')}</span>
+                className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-500 hover:text-white">
+            <span className="ml-3 text-sm">{t('news')}</span>
           </Link>
         </li>
         <li>
           <Link to="/bulletin"
-                className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-gray-900 hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-            <svg
-              className="w-4 h-4 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-              fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-              <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-            </svg>
-            <span className="ml-3 text-sm md:text-base">Bülten</span>
+                className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-500 hover:text-white">
+            <span className="ml-3 text-sm">Bülten</span>
           </Link>
         </li>
         <li>
           <Link to="/communication"
-                className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-gray-900 hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-            <svg
-              className="w-4 h-4 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-              fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-              <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-            </svg>
-            <span className="ml-3 text-sm md:text-base">İletişim</span>
+                className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-500 hover:text-white">
+            <span className="ml-3 text-sm">İletişim</span>
           </Link>
         </li>
       </ul>

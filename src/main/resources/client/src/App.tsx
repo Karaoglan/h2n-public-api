@@ -219,7 +219,7 @@ function App() {
         <FullscreenModal content={fullscreenGridList()} clickCloseHandler={() => setFullscreenOpen(false)}/> :
         <>
           <div className="flex flex-1 overflow-hidden">
-            <div className={hiddenSidebar ? 'hidden' : '' + ` flex bg-gray-100 w-96 p-4`}><NavSideBar/></div>
+            <div className={hiddenSidebar ? 'hidden' : '' + ` flex w-96 p-4`}><NavSideBar/></div>
             <div className="flex flex-1 flex-col">
               <div className="flex flex-row bg-white p-4">
                 <HeaderPage currentLang={lang} collapseSidebar={() => setHiddenSidebar(!hiddenSidebar)} hiddenSidebar={hiddenSidebar} setLang={setLang}/>
