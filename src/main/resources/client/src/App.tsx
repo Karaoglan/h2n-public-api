@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import {Route, Routes} from "react-router";
-
 import {NewsDetail} from "./pages/NewsDetail";
 import {NavSideBar} from "./components/NavSideBar";
 import {AboutUsPage} from "./pages/AboutUs";
