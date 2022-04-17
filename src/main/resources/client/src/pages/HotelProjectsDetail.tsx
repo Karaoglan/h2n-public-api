@@ -63,9 +63,9 @@ export const HotelProjectsDetailPage: FunctionComponent = () => {
       <div className="flex flex-row">
         <div className="flex grow justify-start text-lg font-black">{PROJECT_DETAIL.title}</div>
         <div className="flex justify-end mr-4 text-lg space-x-3">
-          <button onClick={handleOnPrevClick}>{'<'}</button>
-          <div><span className="font-black">{currentIndex + 1}</span>/{featuredImages.length}</div>
-          <button onClick={handleOnNextClick}>{'>'}</button>
+          <button onClick={handleOnPrevClick} className="scale-150">{'<'}</button>
+          <div className="flex scale-75 space-x-1"><span className="font-black">{currentIndex + 1}</span><span>/</span><span>{featuredImages.length}</span></div>
+          <button onClick={handleOnNextClick} className="scale-150">{'>'}</button>
         </div>
       </div>
       <div className="flex flex-row">

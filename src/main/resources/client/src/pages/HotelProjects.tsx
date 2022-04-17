@@ -2,11 +2,13 @@ import React, {FunctionComponent} from "react";
 import HOTEL_IMAGE from "../assets/hotel-dummy.jpg";
 import HOTEL_IMAGE1 from "../assets/hotel1.jpg";
 import HOTEL_IMAGE2 from "../assets/hotel2.jpg";
+import {useNavigate} from "react-router-dom";
 
 type Hotel = {
   id: string,
   title: string,
   subTitle: string,
+  link?: string,
   img: any
 }
 
@@ -21,7 +23,8 @@ const HOTELS: Hotel[] = [
     id: '2',
     title: 'Wynch',
     subTitle: 'Ankara',
-    img: HOTEL_IMAGE
+    img: HOTEL_IMAGE,
+    link: '/projects/hotel/2'
   },
   {
     id: '3',
@@ -51,7 +54,8 @@ const HOTELS: Hotel[] = [
     id: '7',
     title: 'Ramada',
     subTitle: 'Eskişehir',
-    img: HOTEL_IMAGE1
+    img: HOTEL_IMAGE1,
+    link: '/projects/hotel/7'
   },
   {
     id: '8',
@@ -86,14 +90,18 @@ const HOTELS: Hotel[] = [
 ];
 
 export const HotelProjectsPage: FunctionComponent = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="grid grid-cols-3 gap-4 text-lg">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-lg">
       {HOTELS.map(hotel => (
         <div className="flex flex-col gap-1">
           <div className="aspect-w-16 aspect-h-9">
-            <img src={hotel.img}/>
+            {hotel.link ?
+              <img className="cursor-pointer hover:border transition duration-500 hover:scale-125 hover:z-40"
+                   onClick={() => navigate(`/projects/hotel/${hotel.id}`)} src={hotel.img}/> : <img src={hotel.img}/>}
           </div>
-          <div className="">{hotel.title}</div>
+          <div>{hotel.title}</div>
           <div>{hotel.subTitle}</div>
         </div>
       ))}
