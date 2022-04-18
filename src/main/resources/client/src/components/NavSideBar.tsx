@@ -1,5 +1,5 @@
 import React, {FunctionComponent, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {ProjectsSidebar} from "./ProjectsSidebar";
 import {useTranslation} from "react-i18next";
 import {CorporateSidebar} from "./CorporateSidebar";
@@ -8,6 +8,7 @@ export const NavSideBar: FunctionComponent = () => {
   const [openProject, setOpenProject] = useState(false);
   const [openCorporate, setOpenCorporate] = useState(false);
   const {t} = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <div className="overflow-y-auto">
@@ -15,6 +16,7 @@ export const NavSideBar: FunctionComponent = () => {
         <li>
           <CorporateSidebar closeCollapse={openCorporate}
                             clickCollapse={() => {
+                              navigate('/corporate');
                               setOpenCorporate(!openCorporate);
                               if (!openCorporate) {
                                 setOpenProject(false);
@@ -25,6 +27,7 @@ export const NavSideBar: FunctionComponent = () => {
           <ProjectsSidebar closeCollapse={openProject}
                            clickCollapse={() => {
                              setOpenProject(!openProject);
+                             navigate('/projects');
                              if (!openProject) {
                                setOpenCorporate(false);
                              }

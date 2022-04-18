@@ -3,7 +3,7 @@ import corporateImage from "../assets/corporate.jpg";
 
 export const AboutUsPage: FunctionComponent = () => {
   return (
-    <div className="flex flex-col w-full h-full space-y-8">
+    <div className="flex flex-col space-y-8 mb-10">
       <div className="aspect-w-16 aspect-h-9">
         <img src={corporateImage} alt="corporate-image"/>
       </div>

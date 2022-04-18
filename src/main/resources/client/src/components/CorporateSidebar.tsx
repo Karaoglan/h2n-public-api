@@ -35,21 +35,21 @@ export const CorporateSidebar: FunctionComponent<ModalParams> = ({closeCollapse 
           </Link>
         </li>
         <li>
-          <Link to="/otel"
+          <Link to="/corporate/services"
                 className="flex items-center p-2 pl-11 w-full text-sm font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-500 hover:text-white">
-            Hizmetler
+            {t('services')}
           </Link>
         </li>
         <li>
-          <Link to="/ofis"
+          <Link to="/corporate/team"
                 className="flex items-center p-2 pl-11 w-full text-sm font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-500 hover:text-white">
-            Takım
+            {t('team')}
           </Link>
         </li>
         <li>
-          <Link to="/rekreasyon"
+          <Link to="/corporate/quality"
                 className="flex items-center p-2 pl-11 w-full text-sm font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-500 hover:text-white">
-            Kalite
+            {t('quality')}
           </Link>
         </li>
       </ul>

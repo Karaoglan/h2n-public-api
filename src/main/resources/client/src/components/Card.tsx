@@ -11,8 +11,8 @@ export const Card: FunctionComponent<H2NPost> = ({id, summarizeText, postText, c
              style={{backgroundImage: `url(${image})`}}></div>
       </div>
       <div className="w-7/12 p-5">
-        <h1 className="md:text-xl">{id} {summarizeText ? ' - ' + summarizeText : ''}</h1>
-        <div className="mt-4" dangerouslySetInnerHTML={{__html: postText}}></div>
+        <h1 className="md:text-xl text-ellipsis overflow-hidden">{id} {summarizeText ? ' - ' + summarizeText : ''}</h1>
+        <div className="mt-4 text-ellipsis overflow-hidden" dangerouslySetInnerHTML={{__html: postText}}></div>
       </div>
     </div>
   );

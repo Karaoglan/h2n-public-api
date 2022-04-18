@@ -20,6 +20,8 @@ import {DashboardPage} from "./pages/Dashboard";
 import useReactRouterBreadcrumbs from "use-react-router-breadcrumbs";
 import {H2NPost, NewsPage} from "./pages/News";
 import {translationsDe, translationsEn, translationsTr} from "./assets/i18n";
+import {ServicesPage} from "./pages/Services";
+import {TeamPage} from "./pages/Team";
 
 i18n
   .use(initReactI18next)
@@ -51,6 +53,7 @@ function App() {
   const [fullscreenOpen, setFullscreenOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
   const [gridEnabled, setGridEnabled] = useState(true);
+  const [gridVisible, setGridVisible] = useState(false);
   const [hiddenSidebar, setHiddenSidebar] = useState(false);
   const [filter, setFilter] = useState<Filter>({hotel: false, recreation: false, office: false})
   const [posts, setPosts] = useState<H2NPost[]>([]);
@@ -83,7 +86,9 @@ function App() {
         setImageShowFilterEnabled(false);
       }
       setFilterEnabled(true);
+      setGridVisible(true);
     } else {
+      setGridVisible(false);
       setFilterEnabled(false);
     }
   }, [location])
@@ -100,7 +105,11 @@ function App() {
       breadcrumb: "",
     },
     {path: "/news", element: NewsPage, breadcrumb: t('news')},
+    {path: "/corporate", breadcrumb: t('corporate')},
     {path: "/corporate/about-us", element: AboutUsPage, breadcrumb: t('aboutUs')},
+    {path: "/corporate/services", breadcrumb: t('services')},
+    {path: "/corporate/team", breadcrumb: t('team')},
+    {path: "/corporate/quality", breadcrumb: t('quality')},
   ];
 
   const breadcrumbs = useReactRouterBreadcrumbs(routes);
@@ -142,9 +151,12 @@ function App() {
               id="office"
               type="checkbox"
               name="type[office]"
-              onChange={(e) => {console.log(e.target.value); setFilter(prevState => {
-                return {...prevState, office: true}
-              })}}
+              onChange={(e) => {
+                console.log(e.target.value);
+                setFilter(prevState => {
+                  return {...prevState, office: true}
+                })
+              }}
               className="w-5 h-5 border-gray-300 rounded"
             />
 
@@ -161,9 +173,12 @@ function App() {
               id="recreation"
               type="checkbox"
               name="type[recreation]"
-              onChange={(e) => {console.log(e); setFilter(prevState => {
-                return {...prevState, recreation: true}
-              })}}
+              onChange={(e) => {
+                console.log(e);
+                setFilter(prevState => {
+                  return {...prevState, recreation: true}
+                })
+              }}
               className="w-5 h-5 border-gray-300 rounded"
             />
 
@@ -260,10 +275,10 @@ function App() {
                 <HeaderPage currentLang={lang} collapseSidebar={() => setHiddenSidebar(!hiddenSidebar)}
                             hiddenSidebar={hiddenSidebar} setLang={setLang}/>
               </div>
-              <div className="flex flex-row p-4 overflow-y-auto">
+              <div className="flex flex-row p-4 overflow-y-auto space-x-2">
                 <div className="flex flex-col basis-11/12 space-y-4 grow bg-white">
                   <div className="flex flex-row">
-                    <div className="basis-4/5 text-xl divide-x-2 space-x-2">
+                    <div className="basis-4/5 text-xl divide-x-2 space-x-2 space-x-reverse">
                       {breadcrumbs.map(({
                                           match,
                                           breadcrumb
@@ -273,14 +288,17 @@ function App() {
                         </span>
                       ))}
                     </div>
-                    <div className="flex basis-1/5 justify-end">
+                    {gridVisible && <div className="flex basis-1/5 justify-end">
                       <GridIcon onClick={() => enableOrDisableGrid(!gridEnabled)} width="w-4" height="h-4"
                                 fill={gridEnabled ? '#000' : '#c2c4cf'}/>
-                    </div>
+                    </div>}
                   </div>
-                  <div>
+                  <div className="pt-4">
                     <Routes>
+                      <Route path="/corporate" element={<AboutUsPage/>}/>
                       <Route path="/corporate/about-us" element={<AboutUsPage/>}/>
+                      <Route path="/corporate/services" element={<ServicesPage/>}/>
+                      <Route path="/corporate/team" element={<TeamPage/>}/>
                       <Route path="/projects/cafe-restaurant" element={<CafeProjectsPage/>}/>
                       <Route path="/projects/hotel" element={<HotelProjectsPage/>}/>
                       <Route path="/projects/hotel/:id" element={<HotelProjectsDetailPage/>}/>
