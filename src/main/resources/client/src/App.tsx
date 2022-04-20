@@ -27,12 +27,12 @@ i18n
   .use(initReactI18next)
   .init({
     resources: {
-      tr: {translation: translationsTr},
-      en: {translation: translationsEn},
-      de: {translation: translationsDe},
+      TR: {translation: translationsTr},
+      ENG: {translation: translationsEn},
+      DE: {translation: translationsDe},
     },
-    lng: "tr",
-    fallbackLng: "en",
+    lng: "TR",
+    fallbackLng: "ENG",
     interpolation: {escapeValue: false},
   });
 
@@ -47,7 +47,7 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation()
 
-  const [lang, setLang] = useState("tr");
+  const [lang, setLang] = useState("TR");
   const [filterEnabled, setFilterEnabled] = useState(false);
   const [imageShowFilterEnabled, setImageShowFilterEnabled] = useState(false);
   const [fullscreenOpen, setFullscreenOpen] = useState(false);
@@ -263,6 +263,47 @@ function App() {
     );
   }
 
+  function content() {
+    return (
+      <>
+        <div className="flex flex-col space-y-4 grow bg-white">
+          <div className="flex flex-row">
+            <div className="basis-4/5 text-xl divide-x-2 space-x-2 space-x-reverse">
+              {breadcrumbs.map(({
+                                  match,
+                                  breadcrumb
+                                }) => (
+                <span key={match.pathname}>
+                          <NavLink to={match.pathname}>{breadcrumb}</NavLink>
+                        </span>
+              ))}
+            </div>
+            {gridVisible && <div className="flex basis-1/5 justify-end">
+              <GridIcon onClick={() => enableOrDisableGrid(!gridEnabled)} width="w-4" height="h-4"
+                        fill={gridEnabled ? '#000' : '#c2c4cf'}/>
+            </div>}
+          </div>
+          <div className="pt-4">
+            <Routes>
+              <Route path="/corporate" element={<AboutUsPage/>}/>
+              <Route path="/corporate/about-us" element={<AboutUsPage/>}/>
+              <Route path="/corporate/services" element={<ServicesPage/>}/>
+              <Route path="/corporate/team" element={<TeamPage/>}/>
+              <Route path="/projects/cafe-restaurant" element={<CafeProjectsPage/>}/>
+              <Route path="/projects/hotel" element={<HotelProjectsPage/>}/>
+              <Route path="/projects/hotel/:id" element={<HotelProjectsDetailPage/>}/>
+              <Route path="/projects" element={<ProjectsListPage filter={filter} gridEnabled={gridEnabled}/>}/>
+              <Route path="/news" element={<NewsPage updatePosts={setPosts}/>}/>
+              <Route path="/news/:id" element={<NewsDetail allPosts={posts}/>}/>
+              <Route path="/" element={<div>Dashboard</div>}/>
+              <Route path="/bulletin" element={<>selam</>}/>
+            </Routes>
+          </div>
+        </div>
+      </>
+    )
+  }
+
   return (
     <main className="flex flex-col h-screen p-4 lg:px-32 xl:px-64">
       {fullscreenOpen ?
@@ -271,58 +312,24 @@ function App() {
           <div className="flex flex-1 overflow-hidden">
             <div className={hiddenSidebar ? 'hidden' : '' + ` flex w-96 p-4`}><NavSideBar/></div>
             <div className="flex flex-1 flex-col">
-              <div className="flex flex-row bg-white p-4">
+              <div className="flex flex-row bg-white pl-4 py-4">
                 <HeaderPage currentLang={lang} collapseSidebar={() => setHiddenSidebar(!hiddenSidebar)}
                             hiddenSidebar={hiddenSidebar} setLang={setLang}/>
               </div>
               <div className="flex flex-row p-4 overflow-y-auto space-x-2">
-                <div className="flex flex-col basis-11/12 space-y-4 grow bg-white">
-                  <div className="flex flex-row">
-                    <div className="basis-4/5 text-xl divide-x-2 space-x-2 space-x-reverse">
-                      {breadcrumbs.map(({
-                                          match,
-                                          breadcrumb
-                                        }) => (
-                        <span key={match.pathname}>
-                          <NavLink to={match.pathname}>{breadcrumb}</NavLink>
-                        </span>
-                      ))}
-                    </div>
-                    {gridVisible && <div className="flex basis-1/5 justify-end">
-                      <GridIcon onClick={() => enableOrDisableGrid(!gridEnabled)} width="w-4" height="h-4"
-                                fill={gridEnabled ? '#000' : '#c2c4cf'}/>
-                    </div>}
-                  </div>
-                  <div className="pt-4">
-                    <Routes>
-                      <Route path="/corporate" element={<AboutUsPage/>}/>
-                      <Route path="/corporate/about-us" element={<AboutUsPage/>}/>
-                      <Route path="/corporate/services" element={<ServicesPage/>}/>
-                      <Route path="/corporate/team" element={<TeamPage/>}/>
-                      <Route path="/projects/cafe-restaurant" element={<CafeProjectsPage/>}/>
-                      <Route path="/projects/hotel" element={<HotelProjectsPage/>}/>
-                      <Route path="/projects/hotel/:id" element={<HotelProjectsDetailPage/>}/>
-                      <Route path="/projects" element={<ProjectsListPage filter={filter} gridEnabled={gridEnabled}/>}/>
-                      <Route path="/news" element={<NewsPage updatePosts={setPosts}/>}/>
-                      <Route path="/news/:id" element={<NewsDetail allPosts={posts}/>}/>
-                      <Route path="/" element={<div>Dashboard</div>}/>
-                      <Route path="/bulletin" element={<>selam</>}/>
-                    </Routes>
-                  </div>
-                </div>
-                {filterEnabled &&
-                  <>
-                    {filterOpen ? <RenderFilter/>
-                      : <div className="basis-1/12">
-                        <RightSideFilter imageShowFilterEnabled={imageShowFilterEnabled}
-                                         clickFilterHandler={() => setFilterOpen(true)}
-                                         clickCloseHandler={() => setFullscreenOpen(true)}/>
-                      </div>}
-                  </>}
+                {content()}
               </div>
             </div>
+            {filterEnabled &&
+              <>
+                {filterOpen ? <RenderFilter/>
+                  : <RightSideFilter imageShowFilterEnabled={imageShowFilterEnabled}
+                                     clickFilterHandler={() => setFilterOpen(true)}
+                                     clickCloseHandler={() => setFullscreenOpen(true)}/>
+                }
+              </>}
           </div>
-          <div className="flex bg-white p-4">
+          <div className="flex bg-white p-4 mr-4">
             <FooterPage/>
           </div>
         </>

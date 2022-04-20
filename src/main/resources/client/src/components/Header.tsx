@@ -16,6 +16,7 @@ type Props = {
 export const HeaderPage: FunctionComponent<Props> = ({currentLang, setLang, hiddenSidebar, collapseSidebar}) => {
   const inputReference = useRef<HTMLInputElement>(null);
   const [focus, setFocus] = useState(false);
+  const [openLanguageCollapse, setOpenLanguageCollapse] = useState(false);
   const {t} = useTranslation();
 
   const changeFocus = (focus: boolean) => {
@@ -30,13 +31,13 @@ export const HeaderPage: FunctionComponent<Props> = ({currentLang, setLang, hidd
     .append(focus ? 'bg-white shadow appearance-none border' : '')
     .build();
 
-  const markLangOrNothing = (lang: string) => {
+  const active = (lang: string) => {
     return lang === currentLang ? 'font-black' : '';
   }
 
   return (
     <>
-      <div className="flex basis-7/12 items-center space-x-2">
+      <div className="flex basis-7/12 md:basis-8/12 items-center space-x-2">
         {hiddenSidebar &&
           <img onClick={collapseSidebar} src={sidebarActiveIcon} className="w-4 h-4 cursor-pointer hover:bg-gray-300"/>}
         {window.innerWidth <= 650 && !hiddenSidebar &&
@@ -51,14 +52,25 @@ export const HeaderPage: FunctionComponent<Props> = ({currentLang, setLang, hidd
             placeholder={focus ? 'Ara ...' : ''}/>
         </form>
       </div>
-      <div className="flex flex-row items-center justify-end basis-5/12 divide-x-2 space-x-2">
-        <span onClick={() => setLang("de")} className={`${markLangOrNothing('de')} cursor-pointer hover:bg-gray-300`}>DE</span>
-        <span onClick={() => setLang("tr")} className={`${markLangOrNothing('tr')} cursor-pointer hover:bg-gray-300 px-2`}>TR</span>
-        <span onClick={() => setLang("en")} className={`${markLangOrNothing('en')} cursor-pointer hover:bg-gray-300 px-2`}>EN</span>
-        <div className="px-4">
+      <div className="flex flex-row items-center justify-end basis-5/12 md:basis-4/12"
+           onMouseLeave={() => setOpenLanguageCollapse(false)}>
+
+        {openLanguageCollapse ?
+          <div className="divide-x-2 space-x-2" onMouseLeave={() => setOpenLanguageCollapse(true)}>
+            <span onClick={() => setLang("DE")} className={`${active('DE')} cursor-pointer hover:font-black`}>DE</span>
+            <span onClick={() => setLang("TR")}
+                  className={`${active('TR')} cursor-pointer hover:font-black px-2`}>TR</span>
+            <span onClick={() => setLang("ENG")}
+                  className={`${active('ENG')} cursor-pointer hover:font-black px-2`}>ENG</span>
+          </div> :
+          <span className="font-black px-2">{currentLang}</span>
+        }
+        <div onMouseEnter={() => setOpenLanguageCollapse(true)}
+             className="px-4">
           <img src={worldIcon} alt="world-icon" className="w-4 h-4"/>
         </div>
       </div>
+
     </>
   );
 }
