@@ -79,7 +79,7 @@ export const ServicesPage: FunctionComponent = () => {
       </div>
 
       {SERVICES.map((service, idx) => {
-        return <div className="flex flex-row gap-10" id={idx.toString()}>
+        return <div className="flex flex-row gap-10" key={idx}>
           <div className="basis-2/5">
             <div className="aspect-w-16 aspect-h-9">
               <img src={service.img} alt="service-image"/>

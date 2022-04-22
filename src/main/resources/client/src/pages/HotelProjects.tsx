@@ -94,8 +94,8 @@ export const HotelProjectsPage: FunctionComponent = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-lg">
-      {HOTELS.map(hotel => (
-        <div className="flex flex-col gap-1">
+      {HOTELS.map((hotel, idx) => (
+        <div className="flex flex-col gap-1" key={idx}>
           <div className="aspect-w-16 aspect-h-9">
             {hotel.link ?
               <img className="cursor-pointer hover:border transition duration-500 hover:scale-125 hover:z-40"

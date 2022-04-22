@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {CardPulseLoading} from "../components/CardPulseLoading";
 import {Card} from "../components/Card";
 import {useNavigate} from "react-router-dom";

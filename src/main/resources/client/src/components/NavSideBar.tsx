@@ -1,37 +1,22 @@
-import React, {FunctionComponent, useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import React, {FunctionComponent} from "react";
+import {Link, NavLink} from "react-router-dom";
 import {ProjectsSidebar} from "./ProjectsSidebar";
 import {useTranslation} from "react-i18next";
 import {CorporateSidebar} from "./CorporateSidebar";
 
 export const NavSideBar: FunctionComponent = () => {
-  const [openProject, setOpenProject] = useState(false);
-  const [openCorporate, setOpenCorporate] = useState(false);
   const {t} = useTranslation();
-  const navigate = useNavigate();
+  const inActiveClassName = 'flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-500 hover:text-white';
+  const activeClassName = `${inActiveClassName} font-black`;
 
   return (
     <div className="overflow-y-auto">
       <ul>
         <li>
-          <CorporateSidebar closeCollapse={openCorporate}
-                            clickCollapse={() => {
-                              navigate('/corporate');
-                              setOpenCorporate(!openCorporate);
-                              if (!openCorporate) {
-                                setOpenProject(false);
-                              }
-                            }}/>
+          <CorporateSidebar/>
         </li>
         <li>
-          <ProjectsSidebar closeCollapse={openProject}
-                           clickCollapse={() => {
-                             setOpenProject(!openProject);
-                             navigate('/projects');
-                             if (!openProject) {
-                               setOpenCorporate(false);
-                             }
-                           }}/>
+          <ProjectsSidebar/>
         </li>
         <li className="">
           <Link to="/products-design"
@@ -53,15 +38,20 @@ export const NavSideBar: FunctionComponent = () => {
           </Link>
         </li>
         <li>
-          <Link to="/communication"
-                className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-500 hover:text-white">
-            <span className="ml-3 text-sm">İletişim</span>
-          </Link>
+          <NavLink to="/communication"
+                   className={({isActive}) =>
+                     isActive ? activeClassName : inActiveClassName
+                   }>
+            <span className="ml-3 text-sm">{t('communication')}</span>
+          </NavLink>
         </li>
       </ul>
-      <div className="flex mt-20">
-        LOGO
-      </div>
+
+      <Link to="/">
+        <div  className="flex mt-20">
+          LOGO
+        </div>
+      </Link>
       <div className="mt-20 flex content-start">
         <div className="flex mt-4 sm:justify-center sm:mt-0 divide-x-2 gap-2">
           <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white">

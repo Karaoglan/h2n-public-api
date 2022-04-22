@@ -5,5 +5,7 @@ export const translationsTr = {
   services: 'Hizmetler',
   corporate: 'Kurumsal',
   team: 'Takım',
-  quality: 'Kalite'
+  quality: 'Kalite',
+  communication: 'İletişim',
+  bulletin: 'Bülten'
 };

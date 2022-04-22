@@ -5,5 +5,7 @@ export const translationsDe = {
   services: 'Dienstleistungen',
   corporate: 'Unternehmen',
   team: 'Team',
-  quality: 'Qualität'
+  quality: 'Qualität',
+  communication: 'Kommunikation',
+  bulletin: 'Bulletin'
 };

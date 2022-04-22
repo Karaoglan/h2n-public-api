@@ -5,5 +5,7 @@ export const translationsEn = {
   services: 'Services',
   corporate: 'Corporate',
   team: 'Team',
-  quality: 'Quality'
+  quality: 'Quality',
+  communication: 'Communication',
+  bulletin: 'Bulletin'
 };

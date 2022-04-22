@@ -1,24 +1,22 @@
-import React, {FunctionComponent} from "react";
+import React, {FunctionComponent, useState} from "react";
 import {Link} from "react-router-dom";
 
-export type ModalParams = {
-  closeCollapse?: boolean,
-  clickCollapse: React.EventHandler<any>;
-}
+export const ProjectsSidebar: FunctionComponent = () => {
+  const [closeCollapse, setCloseCollapse] = useState(true);
 
-export const ProjectsSidebar: FunctionComponent<ModalParams> = ({closeCollapse = false, clickCollapse}) => {
+  const collapseOpenCss = 'transform rotate-180 transition duration-500 ease-in-out';
+  const collapseCloseCss = 'transform rotate-360 transition duration-500 ease-in-out';
+
 
   return (
-    <div>
+    <div onMouseOver={() => setCloseCollapse(false)} onMouseLeave={() => setCloseCollapse(true)}
+         className="max-h-9 hover:max-h-80 relative overflow-hidden transition-all duration-700">
       <button type="button"
-              onClick={(e) => {
-                clickCollapse(e);
-              }}
               className="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-500"
               aria-controls="dropdown-example">
         <span className="flex-1 ml-3 text-gray-900 text-sm text-left whitespace-nowrap hover:text-white"
         >Projects</span>
-        <svg className={'w-6 h-6 ' + (closeCollapse ? 'transform rotate-180 transition duration-500 ease-in-out' : '')}
+        <svg className={'w-6 h-6 ' + (!closeCollapse ? collapseOpenCss : collapseCloseCss)}
              fill="#000" viewBox="0 0 20 20"
              xmlns="http://www.w3.org/2000/svg">
           <path fillRule="evenodd"
@@ -26,7 +24,7 @@ export const ProjectsSidebar: FunctionComponent<ModalParams> = ({closeCollapse =
                 clipRule="evenodd"></path>
         </svg>
       </button>
-      <ul className={(!closeCollapse ? "hidden" : "") + " py-2 space-y-2"}>
+      <ul className="py-2 space-y-2">
         <li>
           <Link to="/projects/cafe-restaurant"
                 className="flex items-center p-2 pl-11 w-full text-sm font-normal text-gray-900 rounded-lg transition duration-75 group hover:text-white hover:bg-gray-500">

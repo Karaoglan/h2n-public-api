@@ -48,7 +48,7 @@ export const TeamPage: FunctionComponent = () => {
     <div className="flex flex-col w-full h-full">
       <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
         {PEOPLE.map((person, idx) => {
-          return (<div className="">
+          return (<div key={idx} className="">
             <div className="space-y-1">
               <div className="aspect-w-9 aspect-h-9 bg-gray-100">
                 IMG
