@@ -18,7 +18,7 @@ export const RightSideFilter: FunctionComponent<ModalParams> = ({
   const [selectedImageType, setSelectedImageType] = useState('visual');
 
   return (
-    <div className="flex flex-col mt-10 ml-0.5">
+    <div className="flex flex-col mt-32 ml-0.5">
       {imageShowFilterEnabled && <div className="space-y-1">
         <div className={(selectedImageType === 'plan' ? "font-black" : 'text-black') + ' cursor-pointer'}
              onClick={() => setSelectedImageType('plan')}>_Plan

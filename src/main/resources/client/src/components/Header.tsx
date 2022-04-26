@@ -1,5 +1,4 @@
 import React, {FunctionComponent, useRef, useState} from "react";
-import {useTranslation} from "react-i18next";
 import worldIcon from "../assets/icons/world.svg";
 import searchIcon from "../assets/icons/search.svg";
 import sidebarActiveIcon from "../assets/icons/sidebarActive.svg";
@@ -16,8 +15,6 @@ type Props = {
 export const HeaderPage: FunctionComponent<Props> = ({currentLang, setLang, hiddenSidebar, collapseSidebar}) => {
   const inputReference = useRef<HTMLInputElement>(null);
   const [focus, setFocus] = useState(false);
-  const [openLanguageCollapse, setOpenLanguageCollapse] = useState(false);
-  const {t} = useTranslation();
 
   const changeFocus = (focus: boolean) => {
     setFocus(focus);
@@ -52,25 +49,20 @@ export const HeaderPage: FunctionComponent<Props> = ({currentLang, setLang, hidd
             placeholder={focus ? 'Ara ...' : ''}/>
         </form>
       </div>
-      <div className="flex flex-row items-center justify-end basis-5/12 md:basis-4/12"
-           onMouseLeave={() => setOpenLanguageCollapse(false)}>
-
-        {openLanguageCollapse ?
-          <div className="divide-x-2 space-x-2" onMouseLeave={() => setOpenLanguageCollapse(true)}>
+      <div className="flex flex-row items-center justify-end basis-5/12 md:basis-4/12">
+        <div className="flex flex-row">
+          <div className="divide-x-2 space-x-2 relative w-5 hover:w-28 overflow-hidden transition-all duration-700">
             <span onClick={() => setLang("DE")} className={`${active('DE')} cursor-pointer hover:font-black`}>DE</span>
             <span onClick={() => setLang("TR")}
                   className={`${active('TR')} cursor-pointer hover:font-black px-2`}>TR</span>
             <span onClick={() => setLang("ENG")}
                   className={`${active('ENG')} cursor-pointer hover:font-black px-2`}>ENG</span>
-          </div> :
-          <span className="font-black px-2">{currentLang}</span>
-        }
-        <div onMouseEnter={() => setOpenLanguageCollapse(true)}
-             className="px-4">
-          <img src={worldIcon} alt="world-icon" className="w-4 h-4"/>
+          </div>
+          <div className="px-4">
+            <img src={worldIcon} alt="world-icon" className="w-4 h-4"/>
+          </div>
         </div>
       </div>
-
     </>
   );
 }
