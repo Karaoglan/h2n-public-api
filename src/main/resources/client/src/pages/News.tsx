@@ -31,7 +31,7 @@ export const NewsPage: React.FC<Param> = ({updatePosts}) => {
   useEffect(() => {
     setTimeout(() => {
       fetch().then();
-    }, 2000);
+    }, 500);
   }, []);
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export const NewsPage: React.FC<Param> = ({updatePosts}) => {
 
   const clicked = (postId: string) => {
     setClickedPostId(postId);
-    navigate(`/news/${clickedPostId}`);
+    navigate(`/news/${postId}`);
   }
 
   return <>

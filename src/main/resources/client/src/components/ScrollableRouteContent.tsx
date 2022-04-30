@@ -13,6 +13,7 @@ import {ProjectsListPage} from "../pages/ProjectsList";
 import {NewsDetail} from "../pages/NewsDetail";
 import {BulletinPage} from "../pages/Bulletin";
 import {Filter} from "../App";
+import {DashboardPage} from "../pages/Dashboard";
 
 type ModelParam = {
   gridEnabled: boolean,
@@ -53,7 +54,7 @@ export const ScrollableRouteContent: React.FC<ModelParam> = ({
             <Route path="/projects" element={<ProjectsListPage filter={filter} gridEnabled={gridEnabled}/>}/>
             <Route path="/news" element={<NewsPage updatePosts={setPosts}/>}/>
             <Route path="/news/:id" element={<NewsDetail allPosts={posts}/>}/>
-            <Route path="/" element={<div>Dashboard</div>}/>
+            <Route path="/" element={<DashboardPage />}/>
             <Route path="/bulletin" element={<BulletinPage/>}/>
           </Routes>
         </div>

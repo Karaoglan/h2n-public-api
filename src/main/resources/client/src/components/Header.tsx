@@ -16,6 +16,7 @@ export const HeaderPage: FunctionComponent<Props> = ({currentLang, setLang, hidd
   const [focus, setFocus] = useState(false);
   const [languages, setLanguages] = useState(['DE', 'TR', 'ENG']);
   const [searchIconClicked, setSearchIconClicked] = useState(false);
+  const [text, setText] = useState('');
 
   useEffect(() => {
     setLanguages(languages.sort((a, b) => currentLang === a ? -1 : 1));
@@ -60,6 +61,12 @@ export const HeaderPage: FunctionComponent<Props> = ({currentLang, setLang, hidd
               <input
                 type="text"
                 ref={inputReference}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    console.log('Enter pressed ', text);
+                  }
+                }}
+                onChange={(e) => setText(e.target.value)}
                 className={`rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white appearance-none ${searchIconClicked ? 'border-b' : ''}`}
                 placeholder='Ara ...'/>
             </div>
@@ -71,7 +78,7 @@ export const HeaderPage: FunctionComponent<Props> = ({currentLang, setLang, hidd
         <div className="flex flex-row">
           <div className="divide-x-2 space-x-2 relative w-9 hover:w-32 overflow-hidden transition-all duration-700">
             {languages.map(lang => {
-              return <span onClick={() => {
+              return <span key={lang} onClick={() => {
                 setLang(lang);
               }} className={`${active(lang)} cursor-pointer hover:font-black px-2`}>{lang}</span>
             })}
